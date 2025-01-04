@@ -12,6 +12,7 @@ function App() {
         </Route>
       </Routes>
     </BrowserRouter>
+    //some comment
   );
 }
 
