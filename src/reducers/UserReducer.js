@@ -6,7 +6,7 @@ export const defaultUserState = {
 
 export const userAction = {
   login: "LOGIN",
-  register: "REGISTER",
+  logout: "LOGOUT",
 };
 
 export function userReducer(state, action) {
@@ -14,11 +14,10 @@ export function userReducer(state, action) {
   switch (action.type) {
     case userAction.login: {
       // TODO: Login Logic
-      return state;
+      return action.payload;
     }
-    case userAction.register: {
-      // TODO: Register Logic
-      return state;
+    case userAction.logout: {
+      return defaultUserState;
     }
 
     default:
