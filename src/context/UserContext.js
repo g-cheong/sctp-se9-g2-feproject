@@ -7,13 +7,11 @@ export function UserProvider({ children }) {
   const [state, dispatch] = useReducer(userReducer, defaultUserState);
 
   const handlerLogin = (userLoginDetails) => {
-    // Login Logic
+    // TODO: Login Logic
     dispatch({ type: userAction.login, payload: userLoginDetails });
   };
-
-  const handlerRegister = (userRegisterDetails) => {
-    // Register Logic
-    dispatch({ type: userAction.register, payload: userRegisterDetails });
+  const handlerLogout = () => {
+    dispatch({ type: userAction.logout });
   };
 
   const context = {
@@ -21,7 +19,7 @@ export function UserProvider({ children }) {
     username: state.username,
     cart: state.cart,
     handlerLogin,
-    handlerRegister,
+    handlerLogout,
   };
 
   return <UserContext.Provider value={context}>{children}</UserContext.Provider>;

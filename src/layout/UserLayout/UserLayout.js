@@ -1,10 +1,12 @@
 import { Outlet } from "react-router-dom";
+import Navbar from "../../components/NavBar/Navbar";
+import styles from "./UserLayout.module.css";
 
 function UserLayout() {
   return (
     <>
       {/* NavBar goes here */}
-      <nav></nav>
+      <Navbar />
       <main>
         <Outlet />
       </main>
