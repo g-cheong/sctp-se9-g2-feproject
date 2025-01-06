@@ -1,7 +1,15 @@
 import { useEffect, useState } from "react";
-import { fakeStoreApi } from "../../api/fakeStoreApi";
+
 import ProductCard from "../../components/ProductCard/ProductCard";
 import SearchBar from "../../components/SearchBar/SearchBar";
+
+import { fakeStoreApi } from "../../api/fakeStoreApi";
+
+/*
+TODO: MIN
+create basic searchbar
+create/style ProductCard
+*/
 
 function HomePage() {
   const [products, setProducts] = useState([]);
