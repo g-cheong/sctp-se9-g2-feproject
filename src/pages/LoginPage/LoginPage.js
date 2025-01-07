@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import styles from "./LoginPage.module.css";
 
@@ -9,7 +9,7 @@ import { userAction } from "../../reducers/UserReducer";
 import mockApi from "../../api/mockApi";
 
 /* TODO: Firhat
-double check redirect from cart when user is not loggedin working
+double check redirect message from cart when user is not loggedin working
 */
 
 /*
@@ -46,11 +46,7 @@ function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  if (location.state) showStateAlert();
-
-  const showStateAlert = (location) => {
-    alert(`${location.state.message}`);
-  };
+  if (location.state) alert(`${location.state.message}`);
 
   //navigate user to home if user is logged in
   if (user.isLoggedIn) navigate("/", { replace: true });
@@ -133,12 +129,14 @@ function LoginPage() {
   return (
     <div className={styles.loginContainer}>
       <form onSubmit={handlerLogin}>
+        <h2>Login</h2>
         <div className={styles.inputContainer}>
-          <label htmlFor="username">Username</label>
+          {/* <label htmlFor="username">Username</label> */}
           <input
             id="username"
             type="text"
             name="username"
+            placeholder="Username"
             onChange={handlerFormInput}
             value={form.username}
             className={
@@ -150,11 +148,12 @@ function LoginPage() {
           )}
         </div>
         <div className={styles.inputContainer}>
-          <label htmlFor="password">Password</label>
+          {/* <label htmlFor="password">Password</label> */}
           <input
             id="password"
             type="password"
             name="password"
+            placeholder="Password"
             onChange={handlerFormInput}
             value={form.password}
             className={
@@ -168,6 +167,9 @@ function LoginPage() {
         <button className={styles.button} type="submit">
           Login
         </button>
+        <Link className={styles.link} to="/register">
+          New here? Register here.
+        </Link>
       </form>
     </div>
   );
