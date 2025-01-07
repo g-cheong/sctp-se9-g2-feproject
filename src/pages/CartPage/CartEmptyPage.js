@@ -5,7 +5,7 @@ export const CartEmptyPage = () => {
     return (
         <div> 
             <p>
-                You appear to not be logged in to a user account.
+                Your cart appears to be empty...
                 <Link to={"/"}> Shop now! </Link>
             </p>
         </div>
