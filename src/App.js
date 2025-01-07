@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage/HomePage";
 import UserLayout from "./layout/UserLayout/UserLayout";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import CartPage from "./pages/CartPage/CartPage";
+import ProductPage from "./pages/ProductPage/ProductPage";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<UserLayout />}>
           <Route index element={<HomePage />} />
+          <Route path="product/:id" element={<ProductPage />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="cart" element={<CartPage />} />
         </Route>
