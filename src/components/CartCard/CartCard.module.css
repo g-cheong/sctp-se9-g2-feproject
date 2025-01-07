@@ -1,0 +1,42 @@
+#div {
+    margin: 2px;
+}
+.cartList{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.cartCard {
+    align-items: center;
+    border: solid black 1px; 
+    display: flex;
+    flex: 1 1 calc(33% - 10px);
+    flex-direction: row;
+    height: 300px;
+    justify-content: flex-start;
+    margin: 5px;
+    overflow: hidden;
+    width: 98%;
+}
+
+.cartImage {
+    height: 266px;
+    width: 200px;
+    padding: 2em;
+    object-fit: contain;
+    
+}   
+
+.cartProductDetails {
+    display: flex;
+    flex-direction: column;
+    height: 30%;
+    justify-content: space-between;
+    margin: 10px;
+    padding: 5px;
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
