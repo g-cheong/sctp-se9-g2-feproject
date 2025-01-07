@@ -13,8 +13,12 @@ export function userReducer(state, action) {
   console.log("productReducer state, action:", state, action);
   switch (action.type) {
     case userAction.login: {
-      // TODO: Login Logic
-      return action.payload;
+      //payload has username and cart
+      return {
+        isLoggedIn: true,
+        username: action.payload.username,
+        cart: action.payload.cart,
+      };
     }
     case userAction.logout: {
       return defaultUserState;
