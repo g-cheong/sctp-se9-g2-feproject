@@ -1,15 +1,21 @@
-import { useEffect, useState } from "react";
-
-import ProductCard from "../../components/ProductCard/ProductCard";
-import SearchBar from "../../components/SearchBar/SearchBar";
-
+import { useEffect, useState, useMemo } from "react";
 import { fakeStoreApi } from "../../api/fakeStoreApi";
+//import ProductCard from "../../components/ProductCard/ProductCard";
+import SearchBar from "../../components/SearchBar/SearchBar";
+import HomePageView from "./HomePageView";
 
-/*
-TODO: MIN
-create basic searchbar
-create/style ProductCard
-*/
+//getSelectedProducts returns 5 products from the products array.
+//Assumption: products array has atleast 5 products.[Min]
+const getSelectedProducts = (products) => {
+  let selectedProducts = [];
+  if (products !== undefined && products.length > 0) {
+    for (let i = 0; i < 5; i++) {
+      selectedProducts.push(products[i]);
+    }
+    console.log("Getting selected Products..." + selectedProducts.length);
+  }
+  return selectedProducts;
+};
 
 function HomePage() {
   const [products, setProducts] = useState([]);
@@ -29,15 +35,17 @@ function HomePage() {
     getProducts();
   }, []);
 
+  //getSelectedProducts is called only when products array changes.[Min]
+  const selectedProducts = useMemo(
+    () => getSelectedProducts(products),
+    [products]
+  );
+
   return (
     <div>
       <h1>HomePage</h1>
       <SearchBar />
-      <div className="productList">
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div>
+      <HomePageView selectedProducts={selectedProducts} />
     </div>
   );
 }
