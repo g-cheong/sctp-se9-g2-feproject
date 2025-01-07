@@ -19,11 +19,13 @@ import UserContext from "../../context/UserContext";
 function CartPage() {
   const userCtx = useContext(UserContext); 
 
+  console.log("UserContext:", userCtx);
+  
   if(!userCtx.isLoggedIn) {
     return <CartNotLoggedInPage/>;
   } 
 
-  if(userCtx.cart === undefined || userCtx.cart.length === 0) {
+  if(!userCtx.cart || userCtx.cart.length === 0) {
     return <CartEmptyPage/>;
   }
 

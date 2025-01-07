@@ -5,8 +5,12 @@ export const CartNotLoggedInPage = () => {
     return (
         <div> 
             <p>
-                Your cart appears empty...
-                <Link to={"/"}> Shop now! </Link>
+                You appear to not be logged in to a user account.
+                <Link to={"/login"}> Login </Link>
+            </p>
+            <p>Or</p>
+            <p> 
+                Don't have an account? <Link to={"/register"}>Register</Link> 
             </p>
         </div>
     );
