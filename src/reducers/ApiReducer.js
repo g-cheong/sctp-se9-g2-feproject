@@ -59,16 +59,12 @@ export function ApiReducer(state, action) {
           response = await fakeStoreApi.get("products/categories");
           break;
         case apiProductAction.GET_ONE_CATEGORY:
-          //TODO: need to remove hard coded category to accept a custom category
           response = await fakeStoreApi.get("products/category/jewellery");
           break;
         case apiProductAction.ADD_NEW_PRODUCT:
-          //TODO: needs to have a request body when posting
           response = await fakeStoreApi.post("products");
           break;
         case apiProductAction.UPDATE_PRODUCT:
-          // TODO: Has PUT and PATCH, will need to investigate what this is about
-          //TODO: needs to have a request body when posting
           response = await fakeStoreApi.put("products/7");
           break;
         case apiProductAction.DELETE_PRODUCT:

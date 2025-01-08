@@ -1,14 +1,3 @@
-/*
-TODO: Gabriel
-If user is not login, navigate to loginpage with message "Please login to view cart".
-use <Navigate/>
-
-If user is login and no item in cart, display CartEmpty component.
-use !user.isLoggedIn return <CartEmpty/>
-
-If user is login display items in CartCard component from user.cart useContext.
-*/
-
 import { CartCard } from "../../components/CartCard/CartCard";
 import { CartNotLoggedInPage } from "./CartNotLoggedInPage";
 import { CartEmptyPage } from "./CartEmptyPage";
@@ -20,7 +9,7 @@ function CartPage() {
   const userCtx = useContext(UserContext); 
 
   console.log("UserContext:", userCtx);
-  
+
   if(!userCtx.isLoggedIn) {
     return <CartNotLoggedInPage/>;
   } 
