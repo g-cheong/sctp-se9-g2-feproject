@@ -4,9 +4,17 @@ import { CartEmptyPage } from "./CartEmptyPage";
 import { useContext } from "react";
 
 import UserContext from "../../context/UserContext";
+import { userAction } from "../../reducers/UserReducer";
+
 
 function CartPage() {
   const userCtx = useContext(UserContext); 
+
+  const handlerAddProduct = () => {
+    return (
+      userCtx.dispatch({type: userAction.addProduct})
+    );
+  };
 
   console.log("UserContext:", userCtx);
 

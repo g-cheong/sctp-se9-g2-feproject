@@ -40,3 +40,18 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
+.trashButton {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.trashButton:hover {
+    background-color: red;
+    border-radius: 20%;
+}
+
+.trashButton:hover img {
+    filter: brightness(0) invert(1);
+}
