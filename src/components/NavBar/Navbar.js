@@ -7,11 +7,10 @@ function Navbar() {
   const user = useContext(UserContext);
   return (
     <header>
-      <div className={styles.link}>
-        <Link to="/" className={styles.link}>
-          <span className={styles.logoText}>Shop</span>
-        </Link>
-      </div>
+      <Link to="/" className={styles.link}>
+        <span className={styles.logoText}>Shop</span>
+      </Link>
+
       <nav className="styles.navContainer">
         <ul>
           {user.isLoggedIn ? (

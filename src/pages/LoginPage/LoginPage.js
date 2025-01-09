@@ -113,12 +113,12 @@ function LoginPage() {
   const login = async (form) => {
     try {
       const res = await mockApi.get(
-        `users/?username=${form.username}&password=${form.password}`
+        `users/?username=${form.username.toLowerCase()}&password=${form.password.toLowerCase()}`
       );
       //set UserContext to loggedin
       user.dispatch({
         type: userAction.login,
-        payload: { username: res.data[0].username, cart: res.data[0].cart },
+        payload: { username: res.data[0].username, cart: res.data[0].cart, id: res.data[0].id },
       });
       navigate("/", { replace: true });
     } catch (e) {
@@ -139,13 +139,9 @@ function LoginPage() {
             placeholder="Username"
             onChange={handlerFormInput}
             value={form.username}
-            className={
-              formErrors.username ? styles.inputError : styles.formInput
-            }
+            className={formErrors.username ? styles.inputError : styles.formInput}
           />
-          {formErrors.username && (
-            <div className={styles.errorMessage}>{formErrors.username}</div>
-          )}
+          {formErrors.username && <div className={styles.errorMessage}>{formErrors.username}</div>}
         </div>
         <div className={styles.inputContainer}>
           {/* <label htmlFor="password">Password</label> */}
@@ -156,13 +152,9 @@ function LoginPage() {
             placeholder="Password"
             onChange={handlerFormInput}
             value={form.password}
-            className={
-              formErrors.username ? styles.inputError : styles.formInput
-            }
+            className={formErrors.username ? styles.inputError : styles.formInput}
           />
-          {formErrors.password && (
-            <div className={styles.errorMessage}>{formErrors.password}</div>
-          )}
+          {formErrors.password && <div className={styles.errorMessage}>{formErrors.password}</div>}
         </div>
         <button className={styles.button} type="submit">
           Login
