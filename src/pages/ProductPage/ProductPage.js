@@ -1,18 +1,25 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { fakeStoreApi } from "../../api/fakeStoreApi";
+/* import { fakeStoreApi } from "../../api/fakeStoreApi"; */
+import mockApi from "../../api/mockApi";
 import ProductPageView from "./ProductPageView";
 import { useEffect, useState, useMemo } from "react";
 import { useReducer } from "react";
 import { defaultProduct, productReducer } from "../../reducers/ProductReducer";
 import { defaultUserState, userReducer } from "../../reducers/UserReducer";
+import axios from "axios";
 
 function ProductPage() {
   const [state, dispatch] = useReducer(productReducer, defaultProduct);
   const [user, userDispatch] = useReducer(userReducer, defaultUserState);
   const { id } = useParams();
   const [products, setProducts] = useState([]);
-  const [isLoaded, setIsLoaded] = useState(false); 
+  const [isLoaded, setIsLoaded] = useState(false);
+  //Temporarily using StoreAPI for testing.[Min]
+  const FAKESTORE_API_BASE_URL = "https://fakestoreapi.com";
+  const fakeStoreApi = axios.create({
+    baseURL: FAKESTORE_API_BASE_URL,
+  });
 
   const getProduct = async () => {
     try {
@@ -37,15 +44,16 @@ function ProductPage() {
   const handlerPlus = () => {
     dispatch({ type: "PLUS_COUNT" });
   };
-  
+
   const handlerMinus = () => {
     dispatch({ type: "MINUS_COUNT" });
   };
 
   const handlerAddToCart = () => {
-    userDispatch({ type: "ADD_PRODUCT_TO_CART", payload: { product: products, count: state.count,
-      priceTotal: (state.count * products.price).toFixed(2)
-      } });
+    userDispatch({
+      type: "ADD_PRODUCT_TO_CART",
+      payload: { product: products, count: state.count, priceTotal: (state.count * products.price).toFixed(2) },
+    });
   };
 
   const calculatePriceTotal = useMemo(() => {
