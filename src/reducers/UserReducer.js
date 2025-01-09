@@ -7,6 +7,7 @@ export const defaultUserState = {
 export const userAction = {
   login: "LOGIN",
   logout: "LOGOUT",
+  addProductToCart: "ADD_PRODUCT_TO_CART",
 };
 
 export function userReducer(state, action) {
@@ -22,6 +23,21 @@ export function userReducer(state, action) {
     }
     case userAction.logout: {
       return defaultUserState;
+    }
+    //Add product to cart[Min]
+    case userAction.addProductToCart: {
+      let newState = { ...state };     
+      const productItem = {
+        id: action.payload.product.id,
+        title: action.payload.product.title,
+        price: action.payload.product.price,
+        description: action.payload.product.description,
+        image: action.payload.product.image,
+        quantity: action.payload.count,
+        total: action.payload.priceTotal,
+      };
+      newState.cart = [...state.cart, productItem];
+      return newState;
     }
 
     default:

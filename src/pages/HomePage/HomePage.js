@@ -43,7 +43,7 @@ function HomePage() {
 
   return (
     <div>
-      <h1>HomePage</h1>
+      <h1>Mart🛍️</h1>
       <SearchBar />
       <HomePageView selectedProducts={selectedProducts} />
     </div>

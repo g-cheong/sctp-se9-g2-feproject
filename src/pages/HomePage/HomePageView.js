@@ -38,7 +38,7 @@ function HomePageView({ selectedProducts }) {
                           alt="Store Product"
                         />
                         <div className={styles.listItemPrice}>
-                          ${product.price}
+                          ${product.price.toFixed(2)}
                         </div>
                         <span className={styles.listItemTitle}>
                           <h3>{product.title}</h3>

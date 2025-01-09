@@ -13,7 +13,7 @@ export function UserProvider({ children }) {
   const handlerLogout = () => {
     dispatch({ type: userAction.logout });
   };
-
+  debugger;
   const context = {
     isLoggedIn: state.isLoggedIn,
     username: state.username,

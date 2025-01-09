@@ -7,7 +7,7 @@ import UserContext from "../../context/UserContext";
 
 function CartPage() {
   const userCtx = useContext(UserContext); 
-
+  
   console.log("UserContext:", userCtx);
 
   if(!userCtx.isLoggedIn) {
