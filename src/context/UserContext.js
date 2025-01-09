@@ -18,6 +18,7 @@ export function UserProvider({ children }) {
     isLoggedIn: state.isLoggedIn,
     username: state.username,
     cart: state.cart,
+    id: state.id,
     dispatch,
     handlerLogout,
   };

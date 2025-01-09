@@ -104,8 +104,8 @@ function RegisterPage() {
   const register = async (form) => {
     try {
       const res = await mockApi.post(`users`, {
-        username: form.username,
-        password: form.password,
+        username: form.username.toLowerCase(),
+        password: form.password.toLowerCase(),
         cart: [],
       });
 
@@ -130,13 +130,9 @@ function RegisterPage() {
             placeholder="Username"
             onChange={handlerFormInput}
             value={form.username}
-            className={
-              formErrors.username ? styles.inputError : styles.formInput
-            }
+            className={formErrors.username ? styles.inputError : styles.formInput}
           />
-          {formErrors.username && (
-            <div className={styles.errorMessage}>{formErrors.username}</div>
-          )}
+          {formErrors.username && <div className={styles.errorMessage}>{formErrors.username}</div>}
         </div>
         <div className={styles.inputContainer}>
           {/* <label htmlFor="password">Password</label> */}
@@ -147,13 +143,9 @@ function RegisterPage() {
             placeholder="Password"
             onChange={handlerFormInput}
             value={form.password}
-            className={
-              formErrors.username ? styles.inputError : styles.formInput
-            }
+            className={formErrors.username ? styles.inputError : styles.formInput}
           />
-          {formErrors.password && (
-            <div className={styles.errorMessage}>{formErrors.password}</div>
-          )}
+          {formErrors.password && <div className={styles.errorMessage}>{formErrors.password}</div>}
         </div>
         <button className={styles.button} type="submit">
           Register

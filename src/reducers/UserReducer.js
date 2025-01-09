@@ -2,6 +2,7 @@ export const defaultUserState = {
   isLoggedIn: false,
   username: "",
   cart: [],
+  id: null,
 };
 
 export const userAction = {
@@ -13,11 +14,12 @@ export function userReducer(state, action) {
   console.log("productReducer state, action:", state, action);
   switch (action.type) {
     case userAction.login: {
-      //payload has username and cart
+      //payload has username and cart and id
       return {
         isLoggedIn: true,
         username: action.payload.username,
         cart: action.payload.cart,
+        id: action.payload.id,
       };
     }
     case userAction.logout: {

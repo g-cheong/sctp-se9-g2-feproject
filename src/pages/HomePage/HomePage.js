@@ -1,8 +1,8 @@
 import { useEffect, useState, useMemo } from "react";
-import { fakeStoreApi } from "../../api/fakeStoreApi";
 //import ProductCard from "../../components/ProductCard/ProductCard";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import HomePageView from "./HomePageView";
+import mockApi from "../../api/mockApi";
 
 //getSelectedProducts returns 5 products from the products array.
 //Assumption: products array has atleast 5 products.[Min]
@@ -23,7 +23,7 @@ function HomePage() {
   const getProducts = async () => {
     try {
       //get 20 products and set to products(state)
-      const res = await fakeStoreApi.get("/products");
+      const res = await mockApi.get("/products");
       setProducts(res.data);
     } catch (error) {
       console.log(error);
@@ -36,10 +36,7 @@ function HomePage() {
   }, []);
 
   //getSelectedProducts is called only when products array changes.[Min]
-  const selectedProducts = useMemo(
-    () => getSelectedProducts(products),
-    [products]
-  );
+  const selectedProducts = useMemo(() => getSelectedProducts(products), [products]);
 
   return (
     <div>
