@@ -16,7 +16,7 @@ const dummy = {
       category: "men's clothing",
       image: "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg",
       rating: { rate: 4.7, count: 500 },
-      quantity: 10,
+      quantity: 2,
       total: 5590,
     },
     {
@@ -28,14 +28,21 @@ const dummy = {
       category: "men's clothing",
       image: "https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_.jpg",
       rating: { rate: 2.1, count: 430 },
-      quantity: 20,
+      quantity: 3,
       total: 300,
     },
   ],
 };
 
 export function UserProvider({ children }) {
-  const [state, dispatch] = useReducer(userReducer, defaultUserState);
+  const initialState = {
+    ...defaultUserState,
+    // uncomment dummy to use dummy data
+    // ...dummy,
+  };
+
+  // const [state, dispatch] = useReducer(userReducer, defaultUserState);
+  const [state, dispatch] = useReducer(userReducer, initialState);
 
   const handlerLogout = () => {
     dispatch({ type: userAction.logout });

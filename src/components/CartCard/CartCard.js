@@ -1,11 +1,7 @@
 import styles from './CartCard.module.css';
 import trashIcon from '../../icons/trash.svg';
-import { useContext } from 'react';
-import UserContext from '../../context/UserContext';
 
-export const CartCard = ({product}) => {
-    const userCtx = useContext(UserContext);
-
+export const CartCard = ({product, handlerAddProduct, handlerSubtractProduct, handlerRemoveFromCart}) => {
     return (
         <div className={styles.cartList}>
             <div className={styles.cartCard}>
@@ -14,16 +10,16 @@ export const CartCard = ({product}) => {
                     <h1>{product.title}</h1>
                     <h2>${product.price}</h2>
                     <h3>Quantity:
-                        <button onClick={userCtx.handlerSubtractProduct}>-</button>
+                        <button onClick={()=>handlerSubtractProduct(product.id)}>-</button>
                         {product.quantity}
-                        <button onClick={userCtx.handlerAddProduct}>+</button>
+                        <button onClick={()=>handlerAddProduct(product.id)}>+</button>
                     </h3>
                     <h3>Item Total: ${product.total}</h3>
                 </div>
                 <div>
                     <button 
                     className={styles.trashButton}
-                    onClick={userCtx.handlerRemoveFromCart}
+                    onClick={()=>handlerRemoveFromCart(product.id)}
                     >
                         <img src={trashIcon} alt="Remove from cart"/>
                     </button>

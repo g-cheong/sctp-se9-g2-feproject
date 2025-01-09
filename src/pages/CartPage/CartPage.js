@@ -10,10 +10,26 @@ import { userAction } from "../../reducers/UserReducer";
 function CartPage() {
   const userCtx = useContext(UserContext); 
 
-  const handlerAddProduct = () => {
+  const handlerAddProduct = (productId) => {
     return (
-      userCtx.dispatch({type: userAction.addProduct})
-    );
+      userCtx.dispatch({
+        type: userAction.addProduct,
+        payload: {id: productId},
+      }));
+  };
+  const handlerSubtractProduct = (productId) => {
+    return (
+      userCtx.dispatch({
+        type: userAction.subtractProduct,
+        payload: {id: productId},
+      }));
+  };
+  const handlerRemoveFromCart = (productId) => {
+    return (
+      userCtx.dispatch({
+        type: userAction.removeFromCart,
+        payload: {id: productId},
+      }));
   };
 
   console.log("UserContext:", userCtx);
@@ -30,7 +46,15 @@ function CartPage() {
     <div>
           { 
             userCtx.cart.map((product) => {
-              return <CartCard key={product.id} product={product}></CartCard>;
+              return (
+                <CartCard 
+                  key={product.id} 
+                  product={product}
+                  handlerAddProduct={handlerAddProduct}
+                  handlerSubtractProduct={handlerSubtractProduct}
+                  handlerRemoveFromCart={handlerRemoveFromCart}
+                />
+              );
             })
           }
     </div>

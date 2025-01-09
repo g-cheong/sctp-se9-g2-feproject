@@ -53,14 +53,15 @@ export function userReducer(state, action) {
           }
         }
         return product;
-      });
+      })
+      .filter((product) => product.quantity > 0);
       return {
         ...state,
         cart: newCart,
       };
     }
     case userAction.addToCart: {
-      const newProduct = action.paylod;
+      const newProduct = action.payload;
       const newCart = [...state.cart, newProduct];
       return {
         ...state,
