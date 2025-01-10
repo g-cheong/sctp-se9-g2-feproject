@@ -59,6 +59,9 @@ export function UserProvider({ children }) {
   const handlerRemoveFromCart = () => {
     dispatch({ type: userAction.removeFromCart });
   };
+  const handlerAddProductToCart = () => {
+    dispatch({ type: userAction.addProductToCart });
+  };
 
   const context = {
     isLoggedIn: state.isLoggedIn,
@@ -71,6 +74,7 @@ export function UserProvider({ children }) {
     handlerSubtractProduct,
     handlerAddToCart,
     handlerRemoveFromCart,
+    handlerAddProductToCart,
   };
 
   return <UserContext.Provider value={context}>{children}</UserContext.Provider>;

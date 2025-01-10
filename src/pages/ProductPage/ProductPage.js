@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useParams } from "react-router-dom";
 /* import { fakeStoreApi } from "../../api/fakeStoreApi"; */
 import mockApi from "../../api/mockApi";
@@ -6,12 +6,14 @@ import ProductPageView from "./ProductPageView";
 import { useEffect, useState, useMemo } from "react";
 import { useReducer } from "react";
 import { defaultProduct, productReducer } from "../../reducers/ProductReducer";
-import { defaultUserState, userReducer } from "../../reducers/UserReducer";
+import { userAction } from "../../reducers/UserReducer";
 import axios from "axios";
+import UserContext from "../../context/UserContext";
 
 function ProductPage() {
   const [state, dispatch] = useReducer(productReducer, defaultProduct);
-  const [user, userDispatch] = useReducer(userReducer, defaultUserState);
+  // const [user, userDispatch] = useReducer(userReducer, defaultUserState);
+  const userCtx = useContext(UserContext);
   const { id } = useParams();
   const [products, setProducts] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -50,8 +52,8 @@ function ProductPage() {
   };
 
   const handlerAddToCart = () => {
-    userDispatch({
-      type: "ADD_PRODUCT_TO_CART",
+    userCtx.dispatch({
+      type: userAction.addProductToCart,
       payload: { product: products, count: state.count, priceTotal: (state.count * products.price).toFixed(2) },
     });
   };
@@ -70,7 +72,7 @@ function ProductPage() {
         priceTotal={calculatePriceTotal.toFixed(2)}
         handlerAddToCart={handlerAddToCart}
         isLoaded={isLoaded}
-        addedToCart={user.cart}
+        addedToCart={userAction.cart}
       />
     </div>
   );
