@@ -7,7 +7,7 @@ import { useEffect, useState, useMemo } from "react";
 import { useReducer } from "react";
 import { defaultProduct, productReducer } from "../../reducers/ProductReducer";
 import { userAction } from "../../reducers/UserReducer";
-import axios from "axios";
+/* import axios from "axios"; */
 import UserContext from "../../context/UserContext";
 
 function ProductPage() {
@@ -63,7 +63,7 @@ function ProductPage() {
   const calculatePriceTotal = useMemo(() => {
     return state.count * products.price;
   }, [state.count, products.price]);
-  debugger;
+
   return (
     <div>
       <ProductPageView
