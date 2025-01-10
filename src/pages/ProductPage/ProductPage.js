@@ -17,17 +17,18 @@ function ProductPage() {
   const { id } = useParams();
   const [products, setProducts] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [addedItemsToCart, setAddedItemsToCart] = useState(0);
   //Temporarily using StoreAPI for testing.[Min]
-  const FAKESTORE_API_BASE_URL = "https://fakestoreapi.com";
+  /* const FAKESTORE_API_BASE_URL = "https://fakestoreapi.com";
   const fakeStoreApi = axios.create({
     baseURL: FAKESTORE_API_BASE_URL,
-  });
+  }); */
 
   const getProduct = async () => {
     try {
       //get the deails of product and set to product.(state)
       setIsLoaded(false);
-      const res = await fakeStoreApi.get("/products/" + id);
+      const res = await mockApi.get("/products/" + id);
       const singleProduct = res.data;
       if (singleProduct !== null && singleProduct !== undefined) {
         setProducts(singleProduct);
@@ -56,12 +57,13 @@ function ProductPage() {
       type: userAction.addProductToCart,
       payload: { product: products, count: state.count, priceTotal: (state.count * products.price).toFixed(2) },
     });
+    setAddedItemsToCart(state.count);
   };
 
   const calculatePriceTotal = useMemo(() => {
     return state.count * products.price;
   }, [state.count, products.price]);
-
+  debugger;
   return (
     <div>
       <ProductPageView
@@ -72,7 +74,8 @@ function ProductPage() {
         priceTotal={calculatePriceTotal.toFixed(2)}
         handlerAddToCart={handlerAddToCart}
         isLoaded={isLoaded}
-        addedToCart={userAction.cart}
+        addedItemsToCart={addedItemsToCart}
+        totalAddedToCart={userCtx.cart}
       />
     </div>
   );

@@ -1,6 +1,6 @@
 h1 {
   color: darkblue;
-  margin: 0.2rem 0.5rem;
+  margin: 0.2rem 0.8rem;
 }
 
 .sectionStyle {
@@ -19,7 +19,7 @@ h1 {
 .titleStyle {
   display: inline-flex;
   box-sizing: border-box;
-  margin: 0 0.5rem;
+  margin: 0 0.8rem;
 }
 
 .titleName {
@@ -34,13 +34,14 @@ h1 {
   grid-auto-flow: column;
   scroll-snap-type: x mandatory;
   max-height: fit-content;
+  margin-left: 0.6rem;
 }
 
 .listItemStyle {
   scroll-snap-align: start;
   box-sizing: border-box;
   display: inline-block;
-  margin: 0 0.5rem;
+  margin: 0 0.2rem;
   scroll-snap-stop: always;
   padding-bottom: 0.5rem;
   padding-right: 0.5rem;

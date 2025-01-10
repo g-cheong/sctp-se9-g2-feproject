@@ -10,7 +10,8 @@ function ProductPageView({
   priceTotal,
   handlerAddToCart,
   isLoaded,
-  addedToCart,
+  addedItemsToCart,
+  totalAddedToCart,
 }) {
   return (
     <>
@@ -30,11 +31,7 @@ function ProductPageView({
                     <div className={styles.pictureResponsive}>
                       <div className={styles.pictureSize}>
                         <div className={styles.pictureDisplay}>
-                          <img
-                            className={styles.pictureShow}
-                            src={products.image}
-                            alt="Store Product"
-                          ></img>
+                          <img className={styles.pictureShow} src={products.image} alt="Store Product"></img>
                         </div>
                       </div>
                     </div>
@@ -55,10 +52,11 @@ function ProductPageView({
                 <span>{products.description}</span>
               </div>
               <div>
-                {addedToCart !== undefined && addedToCart.length > 0 && (
+                {addedItemsToCart !== undefined && addedItemsToCart > 0 && (
                   <div className={styles.addedToCart}>
-                    <span>{addedToCart[addedToCart.length-1].quantity} Item(s) Added to Cart!</span>
-                  </div>)}
+                    <span>{addedItemsToCart} Item(s) Added to Cart!</span>
+                  </div>
+                )}
               </div>
               <div className={styles.productNumberContainer}>
                 <span>Price: ${products.price}</span>
@@ -69,7 +67,12 @@ function ProductPageView({
                     <Button label="➕" onClick={handlerPlus} />
                   </div>
                 </span>
-                <span>Total Price: {priceTotal} </span>
+                <div className={styles.productTotalNumberContainer}>
+                  <span>Total Price: {priceTotal}</span>
+                  <span>
+                    Total Quantity in Cart: {totalAddedToCart.reduce((total, item) => total + item.quantity, 0)}
+                  </span>
+                </div>
               </div>
               <div className={styles.productActionContainer}>
                 <button className={styles.productActionButton} onClick={handlerAddToCart}>

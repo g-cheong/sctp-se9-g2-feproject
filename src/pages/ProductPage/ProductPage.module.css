@@ -189,11 +189,20 @@
   width: 100%;
   margin-top: 1.5rem;
   font-size: 0.875rem;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .productNumberContainer span {
   display: block;
   margin-bottom: 0.2rem;
+}
+
+.productTotalNumberContainer {
+  margin-bottom: 0.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .productActionContainer {
@@ -249,11 +258,11 @@
   }
 }
 
-.addedToCart{
+.addedToCart {
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 1.0rem;
+  justify-content: left;
+  font-size: 1rem;
   color: rgb(5, 143, 56);
   animation: breathing 3s infinite;
 }
