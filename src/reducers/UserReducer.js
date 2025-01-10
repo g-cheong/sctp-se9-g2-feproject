@@ -36,6 +36,7 @@ export function userReducer(state, action) {
           return {
             ...product,
             quantity: product.quantity + 1,
+            total: ((product.quantity + 1) * product.price).toFixed(2),
           };
         }
         return product;
@@ -52,6 +53,7 @@ export function userReducer(state, action) {
             return {
               ...product,
               quantity: product.quantity > 0 ? product.quantity - 1 : 0,
+              total: ((product.quantity - 1) * product.price).toFixed(2),
             };
           }
           return product;
