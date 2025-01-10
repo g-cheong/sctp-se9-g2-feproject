@@ -1,6 +1,6 @@
 header {
   display: flex;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   height: 4rem;
@@ -9,6 +9,8 @@ header {
   align-items: center;
   z-index: 10;
   box-shadow: 0 1px 3px rgb(0, 0, 0, 0.1);
+  background-color: #394673f9;
+  opacity: 1;
 }
 .logoText {
   padding: 1rem 1rem;
