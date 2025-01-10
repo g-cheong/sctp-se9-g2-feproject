@@ -62,14 +62,6 @@ export function userReducer(state, action) {
         cart: newCart,
       };
     }
-    case userAction.addToCart: {
-      const newProduct = action.payload;
-      const newCart = [...state.cart, newProduct];
-      return {
-        ...state,
-        cart: newCart,
-      };
-    }
     case userAction.removeFromCart: {
       const newCart = state.cart.filter((product) => product.id !== action.payload.id);
       return {
@@ -78,17 +70,34 @@ export function userReducer(state, action) {
       };
     } //Add product to cart[Min]
     case userAction.addProductToCart: {
+      const existingProduct = state.cart.find((product) => product.id === action.payload.product.id);
       let newState = { ...state };
-      const productItem = {
-        id: action.payload.product.id,
-        title: action.payload.product.title,
-        price: action.payload.product.price,
-        description: action.payload.product.description,
-        image: action.payload.product.image,
-        quantity: action.payload.count,
-        total: action.payload.priceTotal,
-      };
-      newState.cart = [...state.cart, productItem];
+      let productItem = {};
+      if(existingProduct) {
+        const updatedCart = state.cart.map((product) => {
+          if (product.id === existingProduct.id) {
+            const updatedTotal = (parseFloat(product.total) + parseFloat(action.payload.priceTotal)).toFixed(2);
+            return {
+              ...product,
+              quantity: product.quantity + action.payload.count,
+              total: updatedTotal,
+            };
+          }
+          return product;
+        });
+        newState.cart = updatedCart;
+      } else {
+        productItem = {
+          id: action.payload.product.id,
+          title: action.payload.product.title,
+          price: action.payload.product.price,
+          description: action.payload.product.description,
+          image: action.payload.product.image,
+          quantity: action.payload.count,
+          total: action.payload.priceTotal,
+        };
+        newState.cart = [...state.cart, productItem];
+      }
       return newState;
     }
 
