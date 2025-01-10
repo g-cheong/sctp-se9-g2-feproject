@@ -55,7 +55,7 @@ function ProductPage() {
   const handlerAddToCart = () => {
     userCtx.dispatch({
       type: userAction.addProductToCart,
-      payload: { product: products, count: state.count, priceTotal: (state.count * products.price).toFixed(2) },
+      payload: { product: products, count: state.count, priceTotal: state.count * products.price },
     });
     setAddedItemsToCart(state.count);
   };

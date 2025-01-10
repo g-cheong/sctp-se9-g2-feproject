@@ -5,6 +5,7 @@ import { useContext } from "react";
 
 import UserContext from "../../context/UserContext";
 import { userAction } from "../../reducers/UserReducer";
+import styles from "./CartPage.module.css";
 
 function CartPage() {
   const userCtx = useContext(UserContext);
@@ -39,7 +40,15 @@ function CartPage() {
   }
 
   return (
-    <div>
+    <div className={styles.cartList}>
+      <section className={styles.totalSection}>
+        <h1>
+          Cart Total: $
+          {userCtx.cart.reduce((acc, product) => {
+            return acc + product.total;
+          }, 0)}
+        </h1>
+      </section>
       {userCtx.cart.map((product) => {
         return (
           <CartCard
