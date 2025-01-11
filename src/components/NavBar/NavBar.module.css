@@ -9,7 +9,8 @@ header {
   align-items: center;
   z-index: 10;
   box-shadow: 0 1px 3px rgb(0, 0, 0, 0.1);
-  background-color: #394673f9;
+  /* background-color: #394674f9; */
+  background-color: var(--color-primary);
   opacity: 1;
 }
 .logoText {
@@ -17,12 +18,13 @@ header {
   /* font-size: 1.5rem; */
   line-height: 2rem;
   font-weight: 800;
-  color: black;
+  color: var(--color-offblack);
 }
 .link {
   text-decoration: none;
   padding: 0.5rem;
-  color: black;
+  color: var(--color-offblack);
+  font-weight: 500;
 }
 /* .link:hover {
   background-color: #dadada;
@@ -31,8 +33,9 @@ header {
 .linkActive {
   text-decoration: none;
   padding: 0.5rem;
-  color: black;
-  background-color: #4f64aef9;
+  color: var(--color-offwhite);
+  /* background-color: #4f64aef9; */
+  background-color: var(--color-secondary);
   border-radius: 0.5rem;
 }
 

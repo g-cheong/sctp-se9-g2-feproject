@@ -1,0 +1,15 @@
+.titleName {
+  margin: 0;
+  line-height: 1.25;
+  box-sizing: border-box;
+  color: darkblue;
+}
+
+.categoryName {
+  font-size: 1rem;
+  text-align: center;
+  background-color: var(--color-white);
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+  margin: 0.5rem;
+}

@@ -1,3 +1,3 @@
 export function displayCost(floatPrice) {
-  return `${floatPrice.toFixed(2)}`;
+  return `$${floatPrice.toFixed(2)}`;
 }

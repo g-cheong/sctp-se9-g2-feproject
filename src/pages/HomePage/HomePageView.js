@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 
 import { PuffLoader } from "react-spinners";
 import styles from "./HomePage.module.css";
+import CategoryList from "../../components/CategoryList/CategoryList";
 
 function HomePageView({ selectedProducts }) {
   return (
@@ -27,19 +28,9 @@ function HomePageView({ selectedProducts }) {
                 {selectedProducts.map((product) => (
                   <li className={styles.listItemStyle} key={product.id}>
                     <div className={styles.listItemDetails}>
-                      <Link
-                        to={`/product/${product.id}`}
-                        className={styles.listItemLink}
-                      >
-                        <img
-                          className={styles.listItemImage}
-                          loading="lazy"
-                          src={product.image}
-                          alt="Store Product"
-                        />
-                        <div className={styles.listItemPrice}>
-                          ${product.price.toFixed(2)}
-                        </div>
+                      <Link to={`/product/${product.id}`} className={styles.listItemLink}>
+                        <img className={styles.listItemImage} loading="lazy" src={product.image} alt="Store Product" />
+                        <div className={styles.listItemPrice}>${product.price.toFixed(2)}</div>
                         <span className={styles.listItemTitle}>
                           <h3>{product.title}</h3>
                         </span>
@@ -52,6 +43,7 @@ function HomePageView({ selectedProducts }) {
           </section>
         </section>
       )}
+      <CategoryList />
     </>
   );
 }
