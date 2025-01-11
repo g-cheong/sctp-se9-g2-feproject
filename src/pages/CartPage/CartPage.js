@@ -1,14 +1,30 @@
 import { CartCard } from "../../components/CartCard/CartCard";
 import { CartNotLoggedInPage } from "./CartNotLoggedInPage";
 import { CartEmptyPage } from "./CartEmptyPage";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 import UserContext from "../../context/UserContext";
 import { userAction } from "../../reducers/UserReducer";
 import styles from "./CartPage.module.css";
+import mockApi from "../../api/mockApi";
+
+const DBupdateCart = async (userId, cart) => {
+  try {
+    const res = await mockApi.patch(`/users/${userId}`, {
+      cart: cart,
+    });
+    console.log("PATCH response:", res);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 function CartPage() {
   const userCtx = useContext(UserContext);
+
+  useEffect(() =>{
+    DBupdateCart(userCtx.id, userCtx.cart);
+  }, [userCtx.cart, userCtx.id]);
 
   const handlerAddProduct = (productId) => {
     return userCtx.dispatch({

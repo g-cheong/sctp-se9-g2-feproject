@@ -17,6 +17,7 @@ export const userAction = {
 
 export function userReducer(state, action) {
   console.log("productReducer state, action:", state, action);
+
   switch (action.type) {
     case userAction.login: {
       //payload has username and cart and id
