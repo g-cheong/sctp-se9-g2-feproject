@@ -13,25 +13,26 @@ header {
   opacity: 1;
 }
 .logoText {
-  padding: 1rem 1rem;
-  font-size: 1.5rem;
+  /* padding: 1rem 1rem; */
+  /* font-size: 1.5rem; */
   line-height: 2rem;
   font-weight: 800;
+  color: black;
 }
 .link {
   text-decoration: none;
   padding: 0.5rem;
   color: black;
 }
-.link:hover {
+/* .link:hover {
   background-color: #dadada;
   border-radius: 0.5rem;
-}
+} */
 .linkActive {
   text-decoration: none;
   padding: 0.5rem;
   color: black;
-  background-color: #b5b5b5;
+  background-color: #4f64aef9;
   border-radius: 0.5rem;
 }
 

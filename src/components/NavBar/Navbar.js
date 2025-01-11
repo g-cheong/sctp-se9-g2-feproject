@@ -8,7 +8,8 @@ function Navbar() {
   return (
     <header>
       <Link to="/" className={styles.link}>
-        <span className={styles.logoText}>Shop</span>
+        <h1 className={styles.logoText}>Mart 🛍️</h1>
+        {/* <span className={styles.logoText}>Shop</span> */}
       </Link>
 
       <nav className="styles.navContainer">
