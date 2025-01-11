@@ -31,7 +31,13 @@ function Navbar() {
             <NavLink className={({ isActive }) => (isActive ? styles.linkActive : styles.link)} to="/cart">
               Cart
             </NavLink>
-          </li>
+            <span>
+            {user.cart.length 
+              ? <span className={styles.badge}>{user.cart.length}</span>
+              : ""
+            }          
+            </span>
+            </li>
         </ul>
       </nav>
     </header>
