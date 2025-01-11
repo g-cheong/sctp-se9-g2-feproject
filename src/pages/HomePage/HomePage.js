@@ -9,10 +9,9 @@ import mockApi from "../../api/mockApi";
 const getSelectedProducts = (products) => {
   let selectedProducts = [];
   if (products !== undefined && products.length > 0) {
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < Math.min(products.length, 5); i++) {
       selectedProducts.push(products[i]);
     }
-    console.log("Getting selected Products..." + selectedProducts.length);
   }
   return selectedProducts;
 };

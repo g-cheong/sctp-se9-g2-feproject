@@ -5,6 +5,9 @@ import UserContext from "../../context/UserContext";
 
 function Navbar() {
   const user = useContext(UserContext);
+  const totalQuantity =
+    Array.isArray(user.cart) && user.cart.length > 0 ? user.cart.reduce((total, item) => total + item.quantity, 0) : 0;
+
   return (
     <header>
       <Link to="/" className={styles.link}>
@@ -29,6 +32,7 @@ function Navbar() {
           <li>
             <NavLink className={({ isActive }) => (isActive ? styles.linkActive : styles.link)} to="/cart">
               Cart
+              {totalQuantity > 0 && <span className={styles.cartBadge}>{totalQuantity}</span>}
             </NavLink>
           </li>
         </ul>

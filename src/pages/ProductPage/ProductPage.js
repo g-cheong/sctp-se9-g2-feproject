@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 /* import { fakeStoreApi } from "../../api/fakeStoreApi"; */
 import mockApi from "../../api/mockApi";
 import ProductPageView from "./ProductPageView";
@@ -14,6 +14,7 @@ function ProductPage() {
   const [state, dispatch] = useReducer(productReducer, defaultProduct);
   // const [user, userDispatch] = useReducer(userReducer, defaultUserState);
   const userCtx = useContext(UserContext);
+  const navigate = useNavigate();
   const { id } = useParams();
   const [products, setProducts] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -53,11 +54,28 @@ function ProductPage() {
   };
 
   const handlerAddToCart = () => {
-    userCtx.dispatch({
-      type: userAction.addProductToCart,
-      payload: { product: products, count: state.count, priceTotal: (state.count * products.price).toFixed(2) },
-    });
-    setAddedItemsToCart(state.count);
+    if (userCtx.isLoggedIn && userCtx.id !== null) {
+      userCtx.dispatch({
+        type: userAction.addProductToCart,
+        payload: { product: products, count: state.count, priceTotal: (state.count * products.price).toFixed(2) },
+      });
+      setAddedItemsToCart(state.count);
+      updateUserCart();
+    } else {
+      navigate("/login");
+    }
+  };
+
+  const updateUserCart = async () => {
+    if (userCtx.isLoggedIn && userCtx.id !== null) {
+      try {
+        await mockApi.patch(`/users/${userCtx.id}`, {
+          cart: userCtx.cart,
+        });
+      } catch (error) {
+        console.error("Failed to update user cart:", error);
+      }
+    }
   };
 
   const calculatePriceTotal = useMemo(() => {
@@ -75,7 +93,6 @@ function ProductPage() {
         handlerAddToCart={handlerAddToCart}
         isLoaded={isLoaded}
         addedItemsToCart={addedItemsToCart}
-        totalAddedToCart={userCtx.cart}
       />
     </div>
   );

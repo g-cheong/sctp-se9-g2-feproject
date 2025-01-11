@@ -11,7 +11,6 @@ function ProductPageView({
   handlerAddToCart,
   isLoaded,
   addedItemsToCart,
-  totalAddedToCart,
 }) {
   return (
     <>
@@ -69,9 +68,6 @@ function ProductPageView({
                 </span>
                 <div className={styles.productTotalNumberContainer}>
                   <span>Total Price: {priceTotal}</span>
-                  <span>
-                    Total Quantity in Cart: {totalAddedToCart.reduce((total, item) => total + item.quantity, 0)}
-                  </span>
                 </div>
               </div>
               <div className={styles.productActionContainer}>
