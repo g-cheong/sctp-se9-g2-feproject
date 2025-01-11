@@ -13,6 +13,7 @@ export const userAction = {
   addToCart: "ADD_TO_CART",
   removeFromCart: "REMOVE_FROM_CART",
   addProductToCart: "ADD_PRODUCT_TO_CART",
+  checkoutCart: "CHECKOUT_CART",
 };
 
 export function userReducer(state, action) {
@@ -103,7 +104,12 @@ export function userReducer(state, action) {
       }
       return newState;
     }
-
+    case userAction.checkoutCart: {
+      return {
+        ...state,
+        cart: [],
+      };
+    }
     default:
       throw Error("productReducer: unknown action:" + action.type);
   }

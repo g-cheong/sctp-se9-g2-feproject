@@ -8,7 +8,7 @@
   padding: 0.3rem;
   background-color: rgb(174, 184, 207);
   border-radius: 100px;
-  border: 1.5px solid black;
+  border: 0.05rem solid rgba(0, 0, 0, 0.253);
   color: black;
   transition-duration: 0.2s;
 }
@@ -42,7 +42,8 @@
 }
 .cartCard {
   align-items: center;
-  border: solid black 1px;
+  border: solid rgba(0, 0, 0, 0.132) 1px;
+  border-radius: 1rem;
   display: flex;
   flex: 1 1 calc(33% - 10px);
   flex-direction: row;

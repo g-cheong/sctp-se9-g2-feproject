@@ -1,12 +1,13 @@
 import { CartCard } from "../../components/CartCard/CartCard";
 import { CartNotLoggedInPage } from "./CartNotLoggedInPage";
 import { CartEmptyPage } from "./CartEmptyPage";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import UserContext from "../../context/UserContext";
 import { userAction } from "../../reducers/UserReducer";
 import styles from "./CartPage.module.css";
 import mockApi from "../../api/mockApi";
+import { CartBar } from "../../components/CartBar/CartBar";
 
 const DBupdateCart = async (userId, cart) => {
   try {
@@ -20,12 +21,23 @@ const DBupdateCart = async (userId, cart) => {
 };
 
 function CartPage() {
+  // declarations
   const userCtx = useContext(UserContext);
+  const [cartWasCleared, setCartWasCleared] = useState(false);
 
+  // useEffects
   useEffect(() =>{
     DBupdateCart(userCtx.id, userCtx.cart);
-  }, [userCtx.cart, userCtx.id]);
+  }, [userCtx.id, userCtx.cart]);
 
+  useEffect(() => {
+    if(cartWasCleared && userCtx.cart.length === 0){
+      setCartWasCleared(false);
+      alert("Cart has been checked out!");
+    }
+  }, [cartWasCleared, userCtx.cart.length]);
+
+  // handler functions
   const handlerAddProduct = (productId) => {
     return userCtx.dispatch({
       type: userAction.addProduct,
@@ -45,8 +57,15 @@ function CartPage() {
     });
   };
 
-  console.log("UserContext:", userCtx);
+  const handlerCartCheckout = () => {
+    // currently just removes items from cart as there's no checkout flow
+    setCartWasCleared(true);
+    return userCtx.dispatch({
+      type: userAction.checkoutCart,
+    });
+  };
 
+  // early return checks
   if (!userCtx.isLoggedIn) {
     return <CartNotLoggedInPage />;
   }
@@ -55,16 +74,13 @@ function CartPage() {
     return <CartEmptyPage />;
   }
 
+  // return statement
   return (
     <div className={styles.cartList}>
-      <section className={styles.totalSection}>
-        <h1>
-          Cart Total: $
-          {userCtx.cart.reduce((acc, product) => {
-            return acc + product.total;
-          }, 0)}
-        </h1>
-      </section>
+      <CartBar 
+        cart={userCtx.cart} 
+        handlerCheckout={handlerCartCheckout}
+      />
       {userCtx.cart.map((product) => {
         return (
           <CartCard
