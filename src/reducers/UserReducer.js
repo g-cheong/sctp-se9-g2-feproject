@@ -13,10 +13,12 @@ export const userAction = {
   addToCart: "ADD_TO_CART",
   removeFromCart: "REMOVE_FROM_CART",
   addProductToCart: "ADD_PRODUCT_TO_CART",
+  checkoutCart: "CHECKOUT_CART",
 };
 
 export function userReducer(state, action) {
   console.log("productReducer state, action:", state, action);
+
   switch (action.type) {
     case userAction.login: {
       //payload has username and cart and id
@@ -36,7 +38,7 @@ export function userReducer(state, action) {
           return {
             ...product,
             quantity: product.quantity + 1,
-            total: ((product.quantity + 1) * product.price).toFixed(2),
+            total: (product.quantity + 1) * product.price,
           };
         }
         return product;
@@ -53,7 +55,7 @@ export function userReducer(state, action) {
             return {
               ...product,
               quantity: product.quantity > 0 ? product.quantity - 1 : 0,
-              total: ((product.quantity - 1) * product.price).toFixed(2),
+              total: (product.quantity - 1) * product.price,
             };
           }
           return product;
@@ -75,10 +77,10 @@ export function userReducer(state, action) {
       const existingProduct = state.cart.find((product) => product.id === action.payload.product.id);
       let newState = { ...state };
       let productItem = {};
-      if(existingProduct) {
+      if (existingProduct) {
         const updatedCart = state.cart.map((product) => {
           if (product.id === existingProduct.id) {
-            const updatedTotal = (parseFloat(product.total) + parseFloat(action.payload.priceTotal)).toFixed(2);
+            const updatedTotal = parseFloat(product.total) + parseFloat(action.payload.priceTotal);
             return {
               ...product,
               quantity: product.quantity + action.payload.count,
@@ -102,7 +104,12 @@ export function userReducer(state, action) {
       }
       return newState;
     }
-
+    case userAction.checkoutCart: {
+      return {
+        ...state,
+        cart: [],
+      };
+    }
     default:
       throw Error("productReducer: unknown action:" + action.type);
   }

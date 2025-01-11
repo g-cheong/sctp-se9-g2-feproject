@@ -11,7 +11,8 @@ function Navbar() {
   return (
     <header>
       <Link to="/" className={styles.link}>
-        <span className={styles.logoText}>Shop</span>
+        <h1 className={styles.logoText}>Mart 🛍️</h1>
+        {/* <span className={styles.logoText}>Shop</span> */}
       </Link>
 
       <nav className="styles.navContainer">
@@ -34,7 +35,13 @@ function Navbar() {
               Cart
               {totalQuantity > 0 && <span className={styles.cartBadge}>{totalQuantity}</span>}
             </NavLink>
-          </li>
+            <span>
+            {user.cart.length 
+              ? <span className={styles.badge}>{user.cart.length}</span>
+              : ""
+            }          
+            </span>
+            </li>
         </ul>
       </nav>
     </header>

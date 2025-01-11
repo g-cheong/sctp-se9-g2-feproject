@@ -10,6 +10,17 @@ import { userAction } from "../../reducers/UserReducer";
 /* import axios from "axios"; */
 import UserContext from "../../context/UserContext";
 
+const DBupdateCart = async (userId, cart) => {
+  try {
+    const res = await mockApi.patch(`/users/${userId}`, {
+      cart: cart,
+    });
+    console.log("PATCH response:", res);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 function ProductPage() {
   const [state, dispatch] = useReducer(productReducer, defaultProduct);
   // const [user, userDispatch] = useReducer(userReducer, defaultUserState);
@@ -24,6 +35,10 @@ function ProductPage() {
   const fakeStoreApi = axios.create({
     baseURL: FAKESTORE_API_BASE_URL,
   }); */
+
+  useEffect(() => {
+    DBupdateCart(userCtx.id, userCtx.cart);
+  }, [userCtx.cart, userCtx.id]);
 
   const getProduct = async () => {
     try {

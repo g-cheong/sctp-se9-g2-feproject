@@ -39,7 +39,6 @@ function HomePage() {
 
   return (
     <div>
-      <h1>Mart🛍️</h1>
       <SearchBar />
       <HomePageView selectedProducts={selectedProducts} />
     </div>

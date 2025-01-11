@@ -1,6 +1,6 @@
 header {
   display: flex;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   height: 4rem;
@@ -9,27 +9,30 @@ header {
   align-items: center;
   z-index: 10;
   box-shadow: 0 1px 3px rgb(0, 0, 0, 0.1);
+  background-color: #394673f9;
+  opacity: 1;
 }
 .logoText {
-  padding: 1rem 1rem;
-  font-size: 1.5rem;
+  /* padding: 1rem 1rem; */
+  /* font-size: 1.5rem; */
   line-height: 2rem;
   font-weight: 800;
+  color: black;
 }
 .link {
   text-decoration: none;
   padding: 0.5rem;
   color: black;
 }
-.link:hover {
+/* .link:hover {
   background-color: #dadada;
   border-radius: 0.5rem;
-}
+} */
 .linkActive {
   text-decoration: none;
   padding: 0.5rem;
   color: black;
-  background-color: #b5b5b5;
+  background-color: #4f64aef9;
   border-radius: 0.5rem;
 }
 
@@ -42,6 +45,23 @@ ul {
 li {
   margin: 0 1rem;
   list-style-type: none;
+}
+
+.badge {
+  position: relative;
+  top: -0.5rem; /* Adjust vertical position */
+  left: -0.5rem; /* Adjust horizontal position */
+  padding: 0.3rem 0.6rem; /* Reduced padding using rem */
+  border-radius: 50%; /* Circular shape */
+  background: rgba(255, 0, 0, 0.616);
+  color: white;
+  font-size: 0.75rem; /* Reduced font size for badge text */
+  line-height: 1; /* Ensure the content is vertically centered */
+  min-width: 1.6rem; /* Set minimum width for a circular shape */
+  height: 1.6rem; /* Set height for a circular shape */
+  /* display: flex; */
+  justify-content: center;
+  align-items: center; /* Center the content */
 }
 
 .cartBadge {
