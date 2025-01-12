@@ -35,3 +35,8 @@
   padding: 1rem;
   margin: 0;
 }
+
+.link {
+  text-decoration: none;
+  color: black;
+}
