@@ -225,6 +225,7 @@
   box-sizing: border-box;
   width: 100%;
   margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
   font-size: 0.875rem;
 }
 
@@ -236,14 +237,20 @@
   width: 100%;
   height: 2.5rem;
   border-radius: 0.5rem;
-  background-color: #394673;
+  background-color: #4d5a8e;
   color: white;
   font-size: 0.875rem;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.5;
   text-align: center;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  margin-bottom: 0.3rem;
+}
+
+.productActionButton:nth-child(2) {
+  background-color: #f1f3f6;
+  color: #475587;
 }
 
 .counter {

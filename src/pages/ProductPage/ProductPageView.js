@@ -9,6 +9,7 @@ function ProductPageView({
   handlerPlus,
   priceTotal,
   handlerAddToCart,
+  handlerContinueShopping,
   isLoaded,
   addedItemsToCart,
 }) {
@@ -73,6 +74,9 @@ function ProductPageView({
               <div className={styles.productActionContainer}>
                 <button className={styles.productActionButton} onClick={handlerAddToCart}>
                   Add to Cart
+                </button>
+                <button className={styles.productActionButton} onClick={handlerContinueShopping}>
+                  Continue Shopping
                 </button>
               </div>
             </div>

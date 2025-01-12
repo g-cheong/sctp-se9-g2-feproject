@@ -98,7 +98,7 @@ export function userReducer(state, action) {
           description: action.payload.product.description,
           image: action.payload.product.image,
           quantity: action.payload.count,
-          total: action.payload.priceTotal,
+          total: parseFloat(action.payload.priceTotal),
         };
         newState.cart = [...state.cart, productItem];
       }

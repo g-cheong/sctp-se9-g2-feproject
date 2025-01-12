@@ -1,46 +1,31 @@
-import React, { useContext } from "react";
+import { useEffect, useState, useMemo } from "react";
+import React, { useCallback, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-/* import { fakeStoreApi } from "../../api/fakeStoreApi"; */
+import { useReducer } from "react";
 import mockApi from "../../api/mockApi";
 import ProductPageView from "./ProductPageView";
-import { useEffect, useState, useMemo } from "react";
-import { useReducer } from "react";
 import { defaultProduct, productReducer } from "../../reducers/ProductReducer";
 import { userAction } from "../../reducers/UserReducer";
-/* import axios from "axios"; */
 import UserContext from "../../context/UserContext";
-
-const DBupdateCart = async (userId, cart) => {
-  try {
-    const res = await mockApi.patch(`/users/${userId}`, {
-      cart: cart,
-    });
-    console.log("PATCH response:", res);
-  } catch (error) {
-    console.log(error);
-  }
-};
+/* import { fakeStoreApi } from "../../api/fakeStoreApi"; */
+/* import axios from "axios"; */
 
 function ProductPage() {
   const [state, dispatch] = useReducer(productReducer, defaultProduct);
-  // const [user, userDispatch] = useReducer(userReducer, defaultUserState);
   const userCtx = useContext(UserContext);
   const navigate = useNavigate();
   const { id } = useParams();
   const [products, setProducts] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [addedItemsToCart, setAddedItemsToCart] = useState(0);
+  const [isCartUpdated, setIsCartUpdated] = useState(false);
   //Temporarily using StoreAPI for testing.[Min]
   /* const FAKESTORE_API_BASE_URL = "https://fakestoreapi.com";
   const fakeStoreApi = axios.create({
     baseURL: FAKESTORE_API_BASE_URL,
   }); */
 
-  useEffect(() => {
-    DBupdateCart(userCtx.id, userCtx.cart);
-  }, [userCtx.cart, userCtx.id]);
-
-  const getProduct = async () => {
+  const getProduct = useCallback(async () => {
     try {
       //get the deails of product and set to product.(state)
       setIsLoaded(false);
@@ -50,15 +35,16 @@ function ProductPage() {
         setProducts(singleProduct);
         setIsLoaded(true);
       }
+      console.log("Running getProduct Function");
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [id]);
 
   useEffect(() => {
     //getProduct fetches the product only when user goes to product(once).
     getProduct();
-  }, []);
+  }, [getProduct]);
 
   const handlerPlus = () => {
     dispatch({ type: "PLUS_COUNT" });
@@ -75,13 +61,17 @@ function ProductPage() {
         payload: { product: products, count: state.count, priceTotal: (state.count * products.price).toFixed(2) },
       });
       setAddedItemsToCart(state.count);
-      updateUserCart();
+      setIsCartUpdated(true);
     } else {
       navigate("/login");
     }
   };
 
-  const updateUserCart = async () => {
+  const handlerContinueShopping = () => {
+    navigate("/");
+  };
+  //Update user cart back to Api.[Min]
+  const updateUserCart = useCallback(async () => {
     if (userCtx.isLoggedIn && userCtx.id !== null) {
       try {
         await mockApi.patch(`/users/${userCtx.id}`, {
@@ -91,7 +81,14 @@ function ProductPage() {
         console.error("Failed to update user cart:", error);
       }
     }
-  };
+  }, [userCtx.isLoggedIn, userCtx.id, userCtx.cart]);
+
+  useEffect(() => {
+    if (isCartUpdated) {
+      updateUserCart();
+      setIsCartUpdated(false);
+    }
+  }, [isCartUpdated, updateUserCart]);
 
   const calculatePriceTotal = useMemo(() => {
     return state.count * products.price;
@@ -106,6 +103,7 @@ function ProductPage() {
         handlerPlus={handlerPlus}
         priceTotal={calculatePriceTotal.toFixed(2)}
         handlerAddToCart={handlerAddToCart}
+        handlerContinueShopping={handlerContinueShopping}
         isLoaded={isLoaded}
         addedItemsToCart={addedItemsToCart}
       />
@@ -113,6 +111,7 @@ function ProductPage() {
   );
 }
 export default ProductPage;
+
 /*
 TODO: MIN
 when user click card route to (/product/:id)

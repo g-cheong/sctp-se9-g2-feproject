@@ -7,7 +7,7 @@ function UserLayout() {
     <>
       {/* NavBar goes here */}
       <Navbar />
-      <main>
+      <main className={styles.main}>
         <Outlet />
       </main>
       {/* Footer goes here */}

@@ -33,15 +33,10 @@ function Navbar() {
           <li>
             <NavLink className={({ isActive }) => (isActive ? styles.linkActive : styles.link)} to="/cart">
               Cart
-              {totalQuantity > 0 && <span className={styles.cartBadge}>{totalQuantity}</span>}
+              {/* {totalQuantity > 0 && <span className={styles.cartBadge}>{totalQuantity}</span>} */}
             </NavLink>
-            <span>
-            {user.cart.length 
-              ? <span className={styles.badge}>{user.cart.length}</span>
-              : ""
-            }          
-            </span>
-            </li>
+            <span>{user.cart.length ? <span className={styles.badge}>{user.cart.length}</span> : ""}</span>
+          </li>
         </ul>
       </nav>
     </header>
