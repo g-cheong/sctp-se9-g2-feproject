@@ -63,6 +63,11 @@
   width: 100%;
   aspect-ratio: 1 / 1;
   align-items: center;
+  background-color: hsl(227, 34%, 95%);
+}
+
+.pictureRatio img {
+  mix-blend-mode: multiply;
 }
 
 .pictureResponsive {
@@ -85,7 +90,6 @@
 }
 
 .pictureDisplay {
-  visibility: visible;
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
@@ -95,8 +99,11 @@
   height: 100%;
 }
 
+/* .pictureShow img {
+  mix-blend-mode: multiply;
+} */
+
 .pictureShow {
-  visibility: visible;
   cursor: crosshair;
   aspect-ratio: 1 / 1;
   width: 60%;

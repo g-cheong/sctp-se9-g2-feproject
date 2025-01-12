@@ -1,8 +1,11 @@
+:root {
+  --background-color: (240, 240, 240);
+}
+
 .sectionStyle {
   flex: 1 1 0%;
   box-sizing: border-box;
   display: block;
-  /* margin-top: 3.5rem; */
 }
 
 .headerStyle {
@@ -30,12 +33,13 @@
   scroll-snap-type: x mandatory;
   max-height: fit-content;
   margin-left: 0.6rem;
+  background-color: var(--background-color);
 }
 
 .listItemStyle {
   scroll-snap-align: start;
   box-sizing: border-box;
-  display: inline-block;
+  display: flexbox;
   margin: 0 0.2rem;
   scroll-snap-stop: always;
   padding-bottom: 0.5rem;
@@ -44,7 +48,7 @@
   padding-left: 0.25rem;
   align-items: center;
   flex-direction: column;
-  display: flex;
+  justify-content: center;
 }
 
 .listItemDetails {
@@ -55,6 +59,11 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  overflow: hidden;
+}
+
+.listItemDetails img {
+  mix-blend-mode: multiply;
 }
 
 .listItemLink {
@@ -65,14 +74,14 @@
 .listItemImage {
   z-index: 1;
   position: relative;
-  width: 50%;
-  height: 100%;
+  width: 65%;
   box-sizing: border-box;
   background-color: initial;
   left: 0;
   top: 0;
   border-style: none;
   object-fit: contain;
+  aspect-ratio: 1 / 1;
 }
 
 .listItemPrice {
@@ -84,7 +93,6 @@
 }
 
 .listItemTitle {
-  font-size: 1rem;
   font-weight: 500;
   box-sizing: border-box;
   color: black;
@@ -94,7 +102,13 @@
 }
 
 .listItemTitle > h3 {
-  font-size: 1rem;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 1024px) {
+  .listItemTitle > h3 {
+    font-size: 0.7rem;
+  }
 }
 
 .spinnerStyle {

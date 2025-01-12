@@ -3,6 +3,7 @@
   line-height: 1.25;
   box-sizing: border-box;
   color: darkblue;
+  padding-left: 0.5rem;
 }
 
 .categoryName {
