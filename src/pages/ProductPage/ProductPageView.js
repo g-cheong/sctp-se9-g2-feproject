@@ -59,7 +59,7 @@ function ProductPageView({
                 )}
               </div>
               <div className={styles.productNumberContainer}>
-                <span>Price: ${products.price}</span>
+                <span>Price: ${products.price ? products.price.toFixed(2) : 0}</span>
                 <span>
                   <div className={styles.counter}>
                     Quantity: <Button label="➖" onClick={handlerMinus} />
