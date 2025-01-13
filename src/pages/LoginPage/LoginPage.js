@@ -53,7 +53,7 @@ function LoginPage() {
 
   useEffect(() => {
     //set title to login
-    document.title = "Mart 🛍️| Login";
+    document.title = "Mart | Login";
   }, []);
 
   const handlerFormInput = (e) => {

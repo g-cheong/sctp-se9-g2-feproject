@@ -28,7 +28,7 @@ function CartPage() {
   // useEffects
   useEffect(() => {
     //set title to cart
-    document.title = "Mart 🛍️| Cart";
+    document.title = "Mart | Cart";
   }, []);
 
   useEffect(() => {

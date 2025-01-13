@@ -1,5 +1,4 @@
 import { useEffect, useState, useMemo } from "react";
-//import ProductCard from "../../components/ProductCard/ProductCard";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import HomePageView from "./HomePageView";
 import mockApi from "../../api/mockApi";
@@ -31,7 +30,7 @@ function HomePage() {
 
   useEffect(() => {
     //set title to home
-    document.title = "Mart 🛍️| Home";
+    document.title = "Mart | Home";
     //getProduct fetches the product only when user goes to homepage(once).
     getProducts();
   }, []);

@@ -2,14 +2,14 @@
   position: absolute;
   text-align: center;
   width: 100%;
-  z-index: 10;
+  z-index: 5;
 }
 
 .recommendCard {
   display: flex;
   border: 1px solid #394673;
   border-radius: 0.5rem;
-  padding: 0.5rem;
+  padding: 0.2rem;
   /* height: 7rem; */
   margin: 0.5rem 0;
   background-color: #fff;

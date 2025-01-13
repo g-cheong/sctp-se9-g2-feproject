@@ -44,7 +44,7 @@ function RegisterPage() {
 
   useEffect(() => {
     //set title to Register
-    document.title = "Mart 🛍️| Register";
+    document.title = "Mart | Register";
   }, []);
 
   const handlerFormInput = (e) => {

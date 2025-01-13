@@ -6,12 +6,6 @@
   padding: 3rem;
 }
 
-@media screen and (max-width: 431px) {
-  .searchContainer {
-    flex-direction: column;
-  }
-}
-
 .searchInput {
   text-align: center;
   font-size: 1.2rem;
@@ -34,9 +28,18 @@
   border: none;
   cursor: pointer;
 }
+.titleName {
+  margin: 0;
+  line-height: 1.25;
+  box-sizing: border-box;
+  color: darkblue;
+}
 
-@media screen and (max-width: 431px) {
-  .searchButton {
-    margin: 0.5rem 0;
+@media only screen and (max-width: 500px) {
+  .searchContainer {
+    padding: 1rem;
+  }
+  .searchInput {
+    width: 230px;
   }
 }

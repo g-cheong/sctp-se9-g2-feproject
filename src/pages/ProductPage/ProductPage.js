@@ -43,7 +43,7 @@ function ProductPage() {
 
   useEffect(() => {
     //set title to login
-    document.title = "Mart 🛍️| Product";
+    document.title = "Mart | Product";
     //getProduct fetches the product only when user goes to product(once).
     getProduct();
   }, [getProduct]);
