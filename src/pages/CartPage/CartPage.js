@@ -26,12 +26,17 @@ function CartPage() {
   const [cartWasCleared, setCartWasCleared] = useState(false);
 
   // useEffects
-  useEffect(() =>{
+  useEffect(() => {
+    //set title to cart
+    document.title = "Mart 🛍️| Cart";
+  }, []);
+
+  useEffect(() => {
     DBupdateCart(userCtx.id, userCtx.cart);
   }, [userCtx.id, userCtx.cart]);
 
   useEffect(() => {
-    if(cartWasCleared && userCtx.cart.length === 0){
+    if (cartWasCleared && userCtx.cart.length === 0) {
       setCartWasCleared(false);
       alert("Cart has been checked out!");
     }
@@ -77,10 +82,7 @@ function CartPage() {
   // return statement
   return (
     <div className={styles.cartList}>
-      <CartBar 
-        cart={userCtx.cart} 
-        handlerCheckout={handlerCartCheckout}
-      />
+      <CartBar cart={userCtx.cart} handlerCheckout={handlerCartCheckout} />
       {userCtx.cart.map((product) => {
         return (
           <CartCard

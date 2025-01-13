@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import styles from "./LoginPage.module.css";
@@ -50,6 +50,11 @@ function LoginPage() {
 
   //navigate user to home if user is logged in
   if (user.isLoggedIn) navigate("/", { replace: true });
+
+  useEffect(() => {
+    //set title to login
+    document.title = "Mart 🛍️| Login";
+  }, []);
 
   const handlerFormInput = (e) => {
     const { name, value } = e.target;

@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import styles from "./RegisterPage.module.css";
@@ -41,6 +41,11 @@ function RegisterPage() {
 
   //navigate user to home if user is logged in
   if (user.isLoggedIn) navigate("/", { replace: true });
+
+  useEffect(() => {
+    //set title to Register
+    document.title = "Mart 🛍️| Register";
+  }, []);
 
   const handlerFormInput = (e) => {
     const { name, value } = e.target;
