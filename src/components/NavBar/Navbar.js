@@ -1,4 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
+import bluebag from "../../assets/bluebag.png";
 import styles from "./NavBar.module.css";
 import { useContext } from "react";
 import UserContext from "../../context/UserContext";
@@ -11,7 +12,8 @@ function Navbar() {
   return (
     <header>
       <Link to="/" className={styles.link}>
-        <h1 className={styles.logoText}>Mart 🛍️</h1>
+        <img className={styles.bagImg} src={bluebag} />
+        <span className={styles.logoText}>Mart</span>
         {/* <span className={styles.logoText}>Shop</span> */}
       </Link>
 

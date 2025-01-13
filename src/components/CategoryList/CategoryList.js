@@ -4,7 +4,7 @@ import mockApi from "../../api/mockApi";
 import ProductList from "../ProductList/ProductList";
 
 function Categorylist() {
-  const [selectedCategory, setSelectedCategory] = useState("women");
+  const [selectedCategory, setSelectedCategory] = useState("women's clothing");
   const [products, setProducts] = useState([]);
   useEffect(() => {
     const getProductByCategory = async () => {

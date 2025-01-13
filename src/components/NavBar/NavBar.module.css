@@ -13,9 +13,14 @@ header {
   background-color: var(--color-primary);
   opacity: 1;
 }
+.bagImg {
+  height: 1.5rem;
+}
+
 .logoText {
   /* padding: 1rem 1rem; */
-  /* font-size: 1.5rem; */
+  padding-left: 0.3rem;
+  font-size: 2rem;
   line-height: 2rem;
   font-weight: 800;
   color: var(--color-offblack);
