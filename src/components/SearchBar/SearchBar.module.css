@@ -5,6 +5,13 @@
   text-align: center;
   padding: 3rem;
 }
+
+@media screen and (max-width: 431px) {
+  .searchContainer {
+    flex-direction: column;
+  }
+}
+
 .searchInput {
   text-align: center;
   font-size: 1.2rem;
@@ -26,4 +33,10 @@
   color: white;
   border: none;
   cursor: pointer;
+}
+
+@media screen and (max-width: 431px) {
+  .searchButton {
+    margin: 0.5rem 0;
+  }
 }

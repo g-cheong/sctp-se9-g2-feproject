@@ -31,9 +31,9 @@ function HomePageView({ selectedProducts }) {
                       <Link to={`/product/${product.id}`} className={styles.listItemLink}>
                         <img className={styles.listItemImage} loading="lazy" src={product.image} alt="Store Product" />
                         <div className={styles.listItemPrice}>${product.price.toFixed(2)}</div>
-                        <span className={styles.listItemTitle}>
+                        <div className={styles.listItemTitle}>
                           <h3>{product.title}</h3>
-                        </span>
+                        </div>
                       </Link>
                     </div>
                   </li>
