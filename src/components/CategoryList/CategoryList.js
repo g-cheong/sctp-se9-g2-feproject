@@ -12,7 +12,7 @@ function Categorylist() {
         const param = new URLSearchParams({ category: selectedCategory });
         const res = await mockApi.get(`/products/?${param.toString()}`);
         console.log(res);
-        setProducts(res.data);
+        setProducts(res.data.filter((product) => product.category === selectedCategory));
       } catch (e) {
         console.log(e);
       }
