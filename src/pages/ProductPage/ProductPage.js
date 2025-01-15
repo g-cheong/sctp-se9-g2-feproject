@@ -7,8 +7,6 @@ import ProductPageView from "./ProductPageView";
 import { defaultProduct, productReducer } from "../../reducers/ProductReducer";
 import { userAction } from "../../reducers/UserReducer";
 import UserContext from "../../context/UserContext";
-/* import { fakeStoreApi } from "../../api/fakeStoreApi"; */
-/* import axios from "axios"; */
 
 function ProductPage() {
   const [state, dispatch] = useReducer(productReducer, defaultProduct);
@@ -18,12 +16,9 @@ function ProductPage() {
   const [products, setProducts] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [addedItemsToCart, setAddedItemsToCart] = useState(0);
+  //To check the states change on Page.[Min]
   const [isCartUpdated, setIsCartUpdated] = useState(false);
-  //Temporarily using StoreAPI for testing.[Min]
-  /* const FAKESTORE_API_BASE_URL = "https://fakestoreapi.com";
-  const fakeStoreApi = axios.create({
-    baseURL: FAKESTORE_API_BASE_URL,
-  }); */
+  const [isHovered, setIsHovered] = useState(false);
 
   const getProduct = useCallback(async () => {
     try {
@@ -108,24 +103,10 @@ function ProductPage() {
         handlerContinueShopping={handlerContinueShopping}
         isLoaded={isLoaded}
         addedItemsToCart={addedItemsToCart}
+        isHovered={isHovered}
+        setIsHovered={setIsHovered}
       />
     </div>
   );
 }
 export default ProductPage;
-
-/*
-TODO: MIN
-when user click card route to (/product/:id)
-use <Link/>
-
-get the product by id from the fakeStoreAPI using useEffect
-useParam to get id
-useEffect and axios API call(refer to ProductPage). store res in product useState
-
-display product details
-
-TODO: MIN/FIRHAT
-user able to add quantity and total price is displayed.
-user able to add to cart and it is saved to the reducer.
-*/

@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 import { PuffLoader } from "react-spinners";
 import styles from "./HomePage.module.css";
 import CategoryList from "../../components/CategoryList/CategoryList";

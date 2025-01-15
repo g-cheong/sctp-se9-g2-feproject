@@ -14,3 +14,9 @@
   border-radius: 0.3rem;
   margin: 0.5rem;
 }
+
+@media (max-width: 501px) {
+  .categoryName {
+    font-size: 0.8rem;
+  }
+}

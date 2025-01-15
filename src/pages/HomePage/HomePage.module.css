@@ -26,7 +26,7 @@
   box-sizing: border-box;
   color: darkblue;
 }
-
+/* For Initial Popular Products List Style on HomePage.[Min] */
 .listStyle {
   display: grid;
   grid-auto-flow: column;

@@ -6,13 +6,11 @@ import UserContext from "../../context/UserContext";
 
 function Navbar() {
   const user = useContext(UserContext);
-  const totalQuantity =
-    Array.isArray(user.cart) && user.cart.length > 0 ? user.cart.reduce((total, item) => total + item.quantity, 0) : 0;
 
   return (
     <header>
       <Link to="/" className={styles.link}>
-        <img className={styles.bagImg} src={bluebag} />
+        <img className={styles.bagImg} src={bluebag} alt="LogoImage" />
         <span className={styles.logoText}>Mart</span>
         {/* <span className={styles.logoText}>Shop</span> */}
       </Link>
@@ -35,7 +33,6 @@ function Navbar() {
           <li>
             <NavLink className={({ isActive }) => (isActive ? styles.linkActive : styles.link)} to="/cart">
               Cart
-              {/* {totalQuantity > 0 && <span className={styles.cartBadge}>{totalQuantity}</span>} */}
             </NavLink>
             <span>{user.cart.length ? <span className={styles.badge}>{user.cart.length}</span> : ""}</span>
           </li>

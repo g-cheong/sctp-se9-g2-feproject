@@ -1,6 +1,8 @@
-import styles from "./ProductPage.module.css";
 import { PuffLoader } from "react-spinners";
 import Button from "../../components/ProductCard/Button";
+//Use the Magnifier component from the react18-image-magnifier package for image.[Min]
+import Magnifier from "react18-image-magnifier";
+import styles from "./ProductPage.module.css";
 
 function ProductPageView({
   products,
@@ -12,6 +14,8 @@ function ProductPageView({
   handlerContinueShopping,
   isLoaded,
   addedItemsToCart,
+  isHovered,
+  setIsHovered,
 }) {
   return (
     <>
@@ -29,10 +33,31 @@ function ProductPageView({
                 <div className={styles.pictureContainer}>
                   <div className={styles.pictureRatio}>
                     <div className={styles.pictureResponsive}>
-                      <div className={styles.pictureSize}>
-                        <div className={styles.pictureDisplay}>
-                          <img className={styles.pictureShow} src={products.image} alt="Store Product"></img>
-                        </div>
+                      <div className={styles.pictureDisplay}>
+                        {products.image && (
+                          <div
+                            onMouseEnter={() => setIsHovered(true)}
+                            onMouseLeave={() => setIsHovered(false)}
+                            onTouchStart={() => setIsHovered(true)}
+                            onTouchEnd={() => setIsHovered(false)}
+                          >
+                            {!isHovered && <div className={styles.overlayText}>Hover / Touch to Zoom</div>}
+                            <Magnifier
+                              src={products.image}
+                              className={styles.pictureShow}
+                              alt="Store Product"
+                              zoomImgSrc={products.image}
+                              zoomFactor={1.8}
+                              mgShowOverflow="false"
+                              mgMouseOffsetX="0"
+                              mgMouseOffsetY="0"
+                              mgTouchOffsetX="0"
+                              mgTouchOffsetY="0"
+                              height="auto"
+                              width="80%"
+                            ></Magnifier>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
