@@ -6,6 +6,6 @@
  * capitalizeFirstLetter("hello world") = "Hello world"
  * capitalizeFirstLetter("this is a test message.") = "This is a test message."
  */
-export function capitalizeFirstLetter(str) {
-  return s ? str[0].toUpperCase() + str.slice(1) : "";
+export default function capitalizeFirstLetter(str) {
+  return str ? str[0].toUpperCase() + str.slice(1) : "";
 }
