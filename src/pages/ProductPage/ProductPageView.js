@@ -15,7 +15,8 @@ function ProductPageView({
   isLoaded,
   addedItemsToCart,
   isHovered,
-  setIsHovered,
+  handlerImageEnter,
+  handlerImageLeave,
 }) {
   return (
     <>
@@ -36,10 +37,10 @@ function ProductPageView({
                       <div className={styles.pictureDisplay}>
                         {products.image && (
                           <div
-                            onMouseEnter={() => setIsHovered(true)}
-                            onMouseLeave={() => setIsHovered(false)}
-                            onTouchStart={() => setIsHovered(true)}
-                            onTouchEnd={() => setIsHovered(false)}
+                            onMouseEnter={handlerImageEnter}
+                            onMouseLeave={handlerImageLeave}
+                            onTouchStart={handlerImageEnter}
+                            onTouchEnd={handlerImageLeave}
                           >
                             {!isHovered && <div className={styles.overlayText}>Hover / Touch to Zoom</div>}
                             <Magnifier

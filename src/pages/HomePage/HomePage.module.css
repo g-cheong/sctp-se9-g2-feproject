@@ -1,7 +1,3 @@
-:root {
-  --background-color: (240, 240, 240);
-}
-
 .sectionStyle {
   flex: 1 1 0%;
   box-sizing: border-box;
@@ -33,7 +29,7 @@
   scroll-snap-type: x mandatory;
   max-height: fit-content;
   margin-left: 0.6rem;
-  background-color: var(--background-color);
+  background-color: var(--color-background);
 }
 
 .listItemStyle {

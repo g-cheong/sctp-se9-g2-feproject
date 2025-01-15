@@ -18,7 +18,6 @@ function ProductPage() {
   const [addedItemsToCart, setAddedItemsToCart] = useState(0);
   //To check the states change on Page.[Min]
   const [isCartUpdated, setIsCartUpdated] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
 
   const getProduct = useCallback(async () => {
     try {
@@ -30,7 +29,6 @@ function ProductPage() {
         setProducts(singleProduct);
         setIsLoaded(true);
       }
-      console.log("Running getProduct Function");
     } catch (error) {
       console.log(error);
     }
@@ -49,6 +47,14 @@ function ProductPage() {
 
   const handlerMinus = () => {
     dispatch({ type: "MINUS_COUNT" });
+  };
+
+  const handlerImageEnter = () => {
+    dispatch({ type: "IMAGE_ENTER" });
+  };
+
+  const handlerImageLeave = () => {
+    dispatch({ type: "IMAGE_LEAVE" });
   };
 
   const handlerAddToCart = () => {
@@ -103,8 +109,9 @@ function ProductPage() {
         handlerContinueShopping={handlerContinueShopping}
         isLoaded={isLoaded}
         addedItemsToCart={addedItemsToCart}
-        isHovered={isHovered}
-        setIsHovered={setIsHovered}
+        isHovered={state.isHovered}
+        handlerImageEnter={handlerImageEnter}
+        handlerImageLeave={handlerImageLeave}
       />
     </div>
   );

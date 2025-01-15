@@ -19,7 +19,7 @@ export function productReducer(state, action) {
       }
       return newState; //Return the new updated state.[PhyoMin]
     }
-   
+
     case "MINUS_COUNT": {
       let newState = { ...state };
       newState.count = state.count - 1;
@@ -27,6 +27,14 @@ export function productReducer(state, action) {
         newState.count = 1;
       }
       return newState;
+    }
+
+    case "IMAGE_ENTER": {
+      return { ...state, isHovered: true };
+    }
+
+    case "IMAGE_LEAVE": {
+      return { ...state, isHovered: false };
     }
 
     default:
