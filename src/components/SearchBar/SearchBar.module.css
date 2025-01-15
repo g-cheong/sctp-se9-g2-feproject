@@ -34,9 +34,34 @@
   border: none;
   cursor: pointer;
 }
+.titleName {
+  margin: 0 0.8rem;
+  line-height: 1.25;
+  box-sizing: border-box;
+  color: darkblue;
+}
 
-@media screen and (max-width: 501px) {
-  .searchButton {
-    margin: 0.5rem 0;
+.errorContainer {
+  margin: 1rem 2rem;
+}
+.errorMessage {
+  padding: 0.5rem 1rem;
+  background-color: #fff5f5;
+  border: 1px solid #ff8787;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #c92a2a;
+}
+
+@media only screen and (max-width: 500px) {
+  .searchContainer {
+    padding: 1rem;
+  }
+  .searchInput {
+    width: 230px;
+  }
+  .errorContainer {
+    text-align: center;
   }
 }

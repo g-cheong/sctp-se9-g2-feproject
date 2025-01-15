@@ -14,9 +14,8 @@ function ProductList({ products }) {
               <div className={styles.productDescContainer}>
                 <p className={styles.title}>{product.title}</p>
                 <div className={styles.ratingPriceContainer}>
-                  <p className={styles.rating}> 
-                    <ReactStars value={product.rating.rate} edit={false}/>
-                    ({product.rating.count})
+                  <p className={styles.rating}>
+                    <ReactStars value={product.rating.rate} edit={false} />({product.rating.count})
                   </p>
                   <p className={styles.price}>{displayCost(product.price)}</p>
                 </div>

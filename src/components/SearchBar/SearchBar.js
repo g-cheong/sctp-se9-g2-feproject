@@ -3,33 +3,81 @@ import { dummyProductData } from "../../dummydata/dummyProductData";
 import styles from "./SearchBar.module.css";
 import Fuse from "fuse.js";
 import RecommendList from "../RecommendList/RecommendList";
+import ProductList from "../ProductList/ProductList";
+import mockApi from "../../api/mockApi";
+
+const initialSearchState = {
+  searchInput: "",
+  prevSearch: "",
+  isHidden: true,
+  searchProducts: [],
+  searchError: "",
+};
 
 function SearchBar() {
-  const [search, setSearch] = useState("");
-  const [isHidden, setIsHidden] = useState(true);
+  const [search, setSearch] = useState(initialSearchState);
 
   const options = {
+    includeScore: true,
+    threshold: 0.4,
+    ignoreLocation: true,
     // isCaseSensitive: false,
     // shouldSort: true,
     // includeMatches: false,
     // findAllMatches: false,
     // minMatchCharLength: 1,
     // location: 0,
-    threshold: 0.4,
+    // threshold: 0.6,
     // distance: 100,
     // useExtendedSearch: false,
     // ignoreLocation: false,
     // ignoreFieldNorm: false,
     // fieldNormWeight: 1,
-    includeScore: true,
+    // includeScore: false,
     keys: ["title"],
   };
 
   const fuse = new Fuse(dummyProductData, options);
-  const result = fuse.search(search);
+  const result = fuse.search(search.searchInput);
   const topFiveResult = result.slice(0, 5);
   console.log(result);
   console.log(topFiveResult);
+
+  const handlerSearch = () => {
+    const getSearchProducts = async () => {
+      //reset the searchError
+      setSearch((prevState) => ({
+        ...prevState,
+        searchError: "",
+      }));
+
+      // search the mockAPI for the following params. If found set result to searchProducts else set searchError message
+      try {
+        const param = new URLSearchParams({ title: search.searchInput });
+        const res = await mockApi.get(`/products/?${param.toString()}`);
+        console.log("Searched Products Results" + res);
+        setSearch((prevState) => ({ ...prevState, searchProducts: res.data, prevSearch: prevState.searchInput }));
+      } catch (e) {
+        setSearch((prevState) => ({
+          ...prevState,
+          searchProducts: [],
+          prevSearch: prevState.searchInput,
+          searchError: `No search result for "${prevState.searchInput}"`,
+        }));
+      }
+    };
+    if (search.searchInput) {
+      getSearchProducts();
+    } else {
+      //if searchInput empty("") does not search and remove searchProducts, searchError and prevSearch
+      setSearch((prevState) => ({
+        ...prevState,
+        searchError: "",
+        searchProducts: [],
+        prevSearch: prevState.searchInput,
+      }));
+    }
+  };
 
   return (
     <>
@@ -42,21 +90,42 @@ function SearchBar() {
             name="search"
             placeholder="Search Products"
             maxLength={100}
-            value={search}
+            value={search.searchInput}
             onChange={(e) => {
-              setSearch(e.target.value);
+              setSearch((prevState) => ({ ...prevState, searchInput: e.target.value }));
             }}
-            // onBlur={() => {
-            //   setIsHidden(true);
-            // }}
+            onBlur={() => {
+              setTimeout(() => {
+                setSearch((prevState) => ({ ...prevState, isHidden: true }));
+              }, 200);
+            }}
             onFocus={() => {
-              setIsHidden(false);
+              setSearch((prevState) => ({ ...prevState, isHidden: false }));
             }}
           />
-          {!isHidden && <RecommendList result={topFiveResult} />}
+          {!search.isHidden && <RecommendList result={topFiveResult} />}
         </div>
-        <button className={styles.searchButton}>Search</button>
+        <button type="submit" className={styles.searchButton} onClick={handlerSearch}>
+          Search
+        </button>
       </div>
+
+      {/* If mockApi returns error show No result found */}
+      {search.searchError && (
+        <>
+          <h2 className={styles.titleName}>Search Results for "{search.prevSearch}"</h2>
+          <div className={styles.errorContainer}>
+            <span className={styles.errorMessage}>{search.searchError}</span>
+          </div>
+        </>
+      )}
+      {/* If mockApi returns data, display searchProducts */}
+      {search.searchProducts.length > 0 && (
+        <>
+          <h2 className={styles.titleName}>Search Results for "{search.prevSearch}"</h2>
+          <ProductList products={search.searchProducts} />
+        </>
+      )}
     </>
   );
 }
