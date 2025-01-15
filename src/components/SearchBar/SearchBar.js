@@ -44,8 +44,8 @@ function SearchBar() {
   console.log(topFiveResult);
 
   const handlerSearch = (e) => {
+    e.preventDefault();
     const getSearchProducts = async () => {
-      e.preventDefault();
       //reset the searchError
       setSearch((prevState) => ({
         ...prevState,
