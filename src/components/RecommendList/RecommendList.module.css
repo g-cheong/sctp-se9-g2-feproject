@@ -1,8 +1,18 @@
+.link {
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+}
+
 .recommendList {
   position: absolute;
   text-align: center;
   width: 100%;
   z-index: 5;
+}
+
+.description {
+  margin: 0 auto;
 }
 
 .recommendCard {
@@ -28,6 +38,7 @@
 }
 
 .category {
+  color: rgb(124, 124, 124);
   font-size: 0.7rem;
   margin: 0;
 }

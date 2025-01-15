@@ -2,7 +2,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 .productCard {
   flex: 0 0 250px;
@@ -18,10 +18,10 @@
   padding: 10px;
   object-fit: contain;
 }
-.ratingPriceContainer{
+.ratingPriceContainer {
   display: flex;
   flex-direction: row;
-  justify-content:space-around;
+  justify-content: space-around;
 }
 .rating {
   display: flex;

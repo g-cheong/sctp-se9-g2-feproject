@@ -16,26 +16,24 @@ const initialSearchState = {
 
 function SearchBar() {
   const [search, setSearch] = useState(initialSearchState);
-  // const [search, setSearch] = useState("");
-  // const [prevSearch, setPrevSearch] = useState("");
-  // const [isHidden, setIsHidden] = useState(true);
-  // const [searchError, setSearchError] = useState("");
-  // const [searchProducts, setSearchProducts] = useState([]);
 
   const options = {
+    includeScore: true,
+    threshold: 0.4,
+    ignoreLocation: true,
     // isCaseSensitive: false,
     // shouldSort: true,
     // includeMatches: false,
     // findAllMatches: false,
     // minMatchCharLength: 1,
     // location: 0,
-    threshold: 0.4,
+    // threshold: 0.6,
     // distance: 100,
     // useExtendedSearch: false,
     // ignoreLocation: false,
     // ignoreFieldNorm: false,
     // fieldNormWeight: 1,
-    includeScore: true,
+    // includeScore: false,
     keys: ["title"],
   };
 
@@ -47,18 +45,18 @@ function SearchBar() {
 
   const handlerSearch = () => {
     const getSearchProducts = async () => {
+      //reset the searchError
       setSearch((prevState) => ({
         ...prevState,
         searchError: "",
       }));
-      // setSearchError("");
+
+      // search the mockAPI for the following params. If found set result to searchProducts else set searchError message
       try {
         const param = new URLSearchParams({ title: search.searchInput });
         const res = await mockApi.get(`/products/?${param.toString()}`);
         console.log("Searched Products Results" + res);
         setSearch((prevState) => ({ ...prevState, searchProducts: res.data, prevSearch: prevState.searchInput }));
-        // setSearchProducts(res.data);
-        // setPrevSearch(search);
       } catch (e) {
         setSearch((prevState) => ({
           ...prevState,
@@ -66,15 +64,18 @@ function SearchBar() {
           prevSearch: prevState.searchInput,
           searchError: `No search result for "${prevState.searchInput}"`,
         }));
-        // setSearchError(`No search result for ${search}`);
-        // setSearchProducts([]);
-        // setPrevSearch(search);
-        console.log(e);
       }
     };
-    //if searchInput empty("") does not search
     if (search.searchInput) {
       getSearchProducts();
+    } else {
+      //if searchInput empty("") does not search and remove searchProducts, searchError and prevSearch
+      setSearch((prevState) => ({
+        ...prevState,
+        searchError: "",
+        searchProducts: [],
+        prevSearch: prevState.searchInput,
+      }));
     }
   };
 
@@ -92,17 +93,14 @@ function SearchBar() {
             value={search.searchInput}
             onChange={(e) => {
               setSearch((prevState) => ({ ...prevState, searchInput: e.target.value }));
-              // setSearch(e.target.value);
             }}
             onBlur={() => {
               setTimeout(() => {
                 setSearch((prevState) => ({ ...prevState, isHidden: true }));
-                // setIsHidden(true);
               }, 200);
             }}
             onFocus={() => {
               setSearch((prevState) => ({ ...prevState, isHidden: false }));
-              // setIsHidden(false);
             }}
           />
           {!search.isHidden && <RecommendList result={topFiveResult} />}
@@ -116,7 +114,9 @@ function SearchBar() {
       {search.searchError && (
         <>
           <h2 className={styles.titleName}>Search Results for "{search.prevSearch}"</h2>
-          <p>{search.searchError}</p>
+          <div className={styles.errorContainer}>
+            <span className={styles.errorMessage}>{search.searchError}</span>
+          </div>
         </>
       )}
       {/* If mockApi returns data, display searchProducts */}

@@ -12,7 +12,7 @@ function Navbar() {
   return (
     <header>
       <Link to="/" className={styles.link}>
-        <img className={styles.bagImg} src={bluebag} />
+        <img className={styles.bagImg} src={bluebag} alt="Mart logo" />
         <span className={styles.logoText}>Mart</span>
         {/* <span className={styles.logoText}>Shop</span> */}
       </Link>
