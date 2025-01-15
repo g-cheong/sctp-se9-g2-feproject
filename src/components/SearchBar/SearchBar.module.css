@@ -54,6 +54,12 @@
   color: #c92a2a;
 }
 
+@media screen and (max-width: 501px) {
+  .searchButton {
+    margin-top: 0.5rem;
+  }
+}
+
 @media only screen and (max-width: 500px) {
   .searchContainer {
     padding: 1rem;
