@@ -43,8 +43,9 @@ function SearchBar() {
   console.log(result);
   console.log(topFiveResult);
 
-  const handlerSearch = () => {
+  const handlerSearch = (e) => {
     const getSearchProducts = async () => {
+      e.preventDefault();
       //reset the searchError
       setSearch((prevState) => ({
         ...prevState,
@@ -81,7 +82,7 @@ function SearchBar() {
 
   return (
     <>
-      <div className={styles.searchContainer}>
+      <form className={styles.searchContainer} onSubmit={handlerSearch}>
         <div className={styles.inputRecommendContainer}>
           <input
             className={styles.searchInput}
@@ -102,13 +103,14 @@ function SearchBar() {
             onFocus={() => {
               setSearch((prevState) => ({ ...prevState, isHidden: false }));
             }}
+            onKeyUp={(e) => e.key === "Enter" && e.currentTarget.blur()}
           />
           {!search.isHidden && <RecommendList result={topFiveResult} />}
         </div>
-        <button type="submit" className={styles.searchButton} onClick={handlerSearch}>
+        <button type="submit" className={styles.searchButton}>
           Search
         </button>
-      </div>
+      </form>
 
       {/* If mockApi returns error show No result found */}
       {search.searchError && (
