@@ -6,12 +6,6 @@
   padding: 3rem;
 }
 
-@media screen and (max-width: 501px) {
-  .searchContainer {
-    flex-direction: column;
-  }
-}
-
 .searchInput {
   text-align: center;
   font-size: 1.2rem;
@@ -52,12 +46,6 @@
   font-size: 1rem;
   font-weight: 700;
   color: #c92a2a;
-}
-
-@media screen and (max-width: 501px) {
-  .searchButton {
-    margin-top: 0.5rem;
-  }
 }
 
 @media only screen and (max-width: 500px) {
