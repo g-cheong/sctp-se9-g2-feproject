@@ -36,6 +36,7 @@
   margin: 1em;
   object-fit:fill;
   border-radius: 0.5rem;
+  mix-blend-mode: multiply;
 }
 .detailsAndTrash {
   display: flex;
