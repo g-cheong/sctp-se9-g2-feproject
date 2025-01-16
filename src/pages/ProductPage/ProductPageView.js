@@ -1,6 +1,6 @@
 import { PuffLoader } from "react-spinners";
 import Button from "../../components/ProductCard/Button";
-//Use the Magnifier component from the react18-image-magnifier package for image.[Min]
+//Use the Magnifier component from the react18-image-magnifier package for image
 import Magnifier from "react18-image-magnifier";
 import styles from "./ProductPage.module.css";
 

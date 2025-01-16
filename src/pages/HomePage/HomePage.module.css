@@ -3,19 +3,16 @@
   box-sizing: border-box;
   display: block;
 }
-
 .headerStyle {
   justify-content: space-between;
   align-items: baseline;
   box-sizing: border-box;
 }
-
 .titleStyle {
   display: inline-flex;
   box-sizing: border-box;
   margin: 0 0.8rem;
 }
-
 .titleName {
   margin: 0;
   line-height: 1.25;
@@ -31,7 +28,6 @@
   margin-left: 0.6rem;
   background-color: var(--color-background);
 }
-
 .listItemStyle {
   scroll-snap-align: start;
   box-sizing: border-box;
@@ -48,7 +44,6 @@
   width: 100%;
   overflow: hidden;
 }
-
 .listItemDetails {
   position: relative;
   font-family: Arial, Helvetica, sans-serif;
@@ -56,16 +51,13 @@
   flex-direction: column;
   box-sizing: border-box;
 }
-
 .listItemDetails img {
   mix-blend-mode: multiply;
 }
-
 .listItemLink {
   text-decoration: none;
   color: black;
 }
-
 .listItemImage {
   z-index: 1;
   position: relative;
@@ -78,7 +70,6 @@
   object-fit: contain;
   aspect-ratio: 1 / 1;
 }
-
 .listItemPrice {
   font-size: 1.2rem;
   font-weight: 700;
@@ -86,7 +77,6 @@
   color: darkslategrey;
   line-height: 1.5;
 }
-
 .listItemTitle {
   font-weight: 500;
   box-sizing: border-box;
@@ -95,24 +85,21 @@
   margin-top: 0.25rem;
   margin-bottom: 0;
 }
-
 .listItemTitle > h3 {
   font-size: 0.9rem;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
   display: -webkit-box;
-  -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   line-clamp: 2;
 }
-
 @media (max-width: 1024px) {
   .listItemTitle > h3 {
     font-size: 0.7rem;
   }
 }
-
 .spinnerStyle {
   display: flex;
   align-items: center;

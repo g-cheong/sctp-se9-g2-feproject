@@ -9,7 +9,7 @@ export const defaultProduct = {
 };
 
 export function productReducer(state, action) {
-  //Reducer function handles for all the product actions.[Min]
+  //Reducer function handles for all the product actions.
   switch (action.type) {
     case "PLUS_COUNT": {
       let newState = { ...state };
@@ -17,7 +17,7 @@ export function productReducer(state, action) {
       if (newState.count > 20) {
         newState.count = 20;
       }
-      return newState; //Return the new updated state.[PhyoMin]
+      return newState; //Return the new updated state.
     }
 
     case "MINUS_COUNT": {

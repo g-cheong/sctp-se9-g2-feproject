@@ -4,7 +4,7 @@ import HomePageView from "./HomePageView";
 import mockApi from "../../api/mockApi";
 
 //getSelectedProducts returns 5 products from the products array.
-//Assumption: products array has atleast 5 products.[Min]
+//Assumption: products array has atleast 5 products.
 const getSelectedProducts = (products) => {
   let selectedProducts = [];
   if (products !== undefined && products.length > 0) {

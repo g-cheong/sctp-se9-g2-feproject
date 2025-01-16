@@ -16,7 +16,7 @@ function ProductPage() {
   const [products, setProducts] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [addedItemsToCart, setAddedItemsToCart] = useState(0);
-  //To check the states change on Page.[Min]
+  //To check the states change on Page
   const [isCartUpdated, setIsCartUpdated] = useState(false);
 
   const getProduct = useCallback(async () => {
@@ -73,7 +73,7 @@ function ProductPage() {
   const handlerContinueShopping = () => {
     navigate("/");
   };
-  //Update user cart back to Api.[Min]
+  //Update user cart back to Api
   const updateUserCart = useCallback(async () => {
     if (userCtx.isLoggedIn && userCtx.id !== null) {
       try {

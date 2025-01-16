@@ -4,32 +4,26 @@
   justify-content: center;
   align-items: center;
 }
-
 form {
   display: grid;
   text-align: center;
 }
-
 label {
   color: #4d4d4d;
 }
-
 .formInput {
   width: 10rem;
   height: 2rem;
 }
-
 .inputError {
   width: 10rem;
   height: 2rem;
 }
-
 .inputContainer {
   display: grid;
   justify-items: center;
   margin: 1rem 0;
 }
-
 .errorMessage {
   padding: 0.5rem 1rem;
   background-color: #fff5f5;
@@ -53,7 +47,6 @@ label {
 .button:hover {
   background-color: var(--color-primary);
 }
-
 .link {
   font-size: 0.7rem;
 }

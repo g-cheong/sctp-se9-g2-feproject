@@ -72,7 +72,7 @@ export function userReducer(state, action) {
         ...state,
         cart: newCart,
       };
-    } //Add product to cart[Min]
+    } //Add product to cart
     case userAction.addProductToCart: {
       const existingProduct = state.cart.find((product) => product.id === action.payload.product.id);
       let newState = { ...state };

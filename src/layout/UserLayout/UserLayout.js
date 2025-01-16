@@ -10,7 +10,6 @@ function UserLayout() {
       <main className={styles.main}>
         <Outlet />
       </main>
-      {/* Footer goes here */}
       <footer></footer>
     </>
   );

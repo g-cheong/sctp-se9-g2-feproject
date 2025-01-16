@@ -8,10 +8,6 @@ import UserContext from "../../context/UserContext";
 import { userAction } from "../../reducers/UserReducer";
 import mockApi from "../../api/mockApi";
 
-/* TODO: Firhat
-double check redirect message from cart when user is not loggedin working
-*/
-
 /*
 Page Workflow/Feature:
 If user is navigated from cart, alert(message);
@@ -86,7 +82,6 @@ function LoginPage() {
         updatedErrors[name] = error.details[0].message;
       } else {
         delete updatedErrors[name];
-        // updatedErrors[name] = "";
       }
 
       return updatedErrors;

@@ -77,7 +77,6 @@ function RegisterPage() {
         updatedErrors[name] = error.details[0].message;
       } else {
         delete updatedErrors[name];
-        // updatedErrors[name] = "";
       }
 
       return updatedErrors;
