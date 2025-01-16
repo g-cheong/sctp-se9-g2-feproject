@@ -16,7 +16,6 @@ header {
 .bagImg {
   height: 1.5rem;
 }
-
 .logoText {
   /* padding: 1rem 1rem; */
   padding-left: 0.3rem;
@@ -31,30 +30,22 @@ header {
   color: var(--color-offblack);
   font-weight: 500;
 }
-/* .link:hover {
-  background-color: #dadada;
-  border-radius: 0.5rem;
-} */
 .linkActive {
   text-decoration: none;
   padding: 0.5rem;
   color: var(--color-offwhite);
-  /* background-color: #4f64aef9; */
   background-color: var(--color-secondary);
   border-radius: 0.5rem;
 }
-
 ul {
   display: flex;
   align-items: center;
   padding: 0;
 }
-
 li {
   margin: 0 1rem;
   list-style-type: none;
 }
-
 .badge {
   position: relative;
   top: -0.5rem; /* Adjust vertical position */
@@ -67,11 +58,9 @@ li {
   line-height: 1; /* Ensure the content is vertically centered */
   min-width: 1.6rem; /* Set minimum width for a circular shape */
   height: 1.6rem; /* Set height for a circular shape */
-  /* display: flex; */
   justify-content: center;
   align-items: center; /* Center the content */
 }
-
 .cartBadge {
   background-color: rgb(76, 71, 174);
   color: white;

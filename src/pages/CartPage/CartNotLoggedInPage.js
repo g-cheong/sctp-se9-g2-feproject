@@ -9,7 +9,7 @@ export const CartNotLoggedInPage = () => {
             </p>
             <p>Or</p>
             <p> 
-                Don't have an account? <Link to={"/register"}>Register</Link> 
+                New here? <Link to={"/register"}>Register</Link> 
             </p>
         </div>
     );
