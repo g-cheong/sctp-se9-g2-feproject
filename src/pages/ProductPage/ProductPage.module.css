@@ -98,13 +98,18 @@
   border-style: none;
   max-width: 200%;
   user-select: none;
-  display: block;
   object-fit: contain;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: auto;
   height: auto;
+}
+.magnifier.pictureShow {
+  display: flex;
+}
+.magnifier {
+  display: flex;
 }
 .pictureShow > img {
   width: 80%;
