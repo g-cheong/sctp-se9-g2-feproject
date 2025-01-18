@@ -105,12 +105,6 @@
   margin: auto;
   height: auto;
 }
-.magnifier.pictureShow {
-  display: flex;
-}
-.magnifier {
-  display: flex;
-}
 .pictureShow > img {
   width: 80%;
   height: auto;
@@ -320,4 +314,7 @@
   font-size: 1rem;
   color: rgb(5, 143, 56);
   animation: breathing 3s infinite;
+}
+.magnifierPicture {
+  display: flex !important;
 }

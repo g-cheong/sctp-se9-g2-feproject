@@ -37,6 +37,7 @@ function ProductPageView({
                       <div className={styles.pictureDisplay}>
                         {products.image && (
                           <div
+                            className={styles.magnifierPicture}
                             onMouseEnter={handlerImageEnter}
                             onMouseLeave={handlerImageLeave}
                             onTouchStart={handlerImageEnter}
