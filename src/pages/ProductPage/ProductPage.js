@@ -77,7 +77,7 @@ function ProductPage() {
   const updateUserCart = useCallback(async () => {
     if (userCtx.isLoggedIn && userCtx.id !== null) {
       try {
-        await mockApi.patch(`/users/${userCtx.id}`, {
+        await mockApi.put(`/users/${userCtx.id}`, {
           cart: userCtx.cart,
         });
       } catch (error) {
