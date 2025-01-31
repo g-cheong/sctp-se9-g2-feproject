@@ -2,13 +2,12 @@ import { Link, NavLink } from "react-router-dom";
 import bluebag from "../../assets/bluebag.png";
 import styles from "./NavBar.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import USER_ACTION from "../../redux/userReducer";
-import CART_ACTION from "../../redux/cartReducer";
+import { USER_ACTION } from "../../redux/userReducer";
+import { CART_ACTION } from "../../redux/cartReducer";
 
 function Navbar() {
   const user = useSelector((state) => state.user);
   const { cart } = useSelector((state) => state.cart);
-
   const dispatch = useDispatch();
 
   return (

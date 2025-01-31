@@ -63,7 +63,7 @@ function ProductPage() {
     if (userCtx.isLoggedIn && userCtx.id !== null) {
       dispatchRedux(
         CART_ACTION.addToCart({
-          product: products,
+          ...products,
           quantity: state.count,
           total: parseFloat((state.count * products.price).toFixed(2)),
         })

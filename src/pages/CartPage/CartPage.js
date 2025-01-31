@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import CART_ACTION from "../../redux/cartReducer";
+import { CART_ACTION } from "../../redux/cartReducer";
 
 import styles from "./CartPage.module.css";
 
@@ -49,13 +49,13 @@ function CartPage() {
 
   // handler functions
   const handlerAddProduct = (productId) => {
-    dispatch(CART_ACTION.addOneProduct(productId));
+    dispatch(CART_ACTION.addOneProduct({ id: productId }));
   };
   const handlerSubtractProduct = (productId) => {
-    dispatch(CART_ACTION.deductOneProduct(productId));
+    dispatch(CART_ACTION.deductOneProduct({ id: productId }));
   };
   const handlerRemoveFromCart = (productId) => {
-    dispatch(CART_ACTION.removeProduct(productId));
+    dispatch(CART_ACTION.removeProduct({ id: productId }));
   };
 
   const handlerCartCheckout = () => {
@@ -80,7 +80,7 @@ function CartPage() {
       {cart.map((product) => {
         return (
           <CartCard
-            key={product.product.id}
+            key={product.id}
             product={product}
             handlerAddProduct={handlerAddProduct}
             handlerSubtractProduct={handlerSubtractProduct}

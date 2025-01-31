@@ -12,7 +12,7 @@ export const cartSlice = createSlice({
       state.cart = action.payload;
     },
     addToCart: (state, action) => {
-      const index = state.cart.findIndex((cartProduct) => cartProduct.product.id === action.payload.product.id);
+      const index = state.cart.findIndex((cartProduct) => cartProduct.id === action.payload.id);
 
       if (index < 0) {
         //if doesnt exist push
@@ -25,23 +25,28 @@ export const cartSlice = createSlice({
     },
     addOneProduct: (state, action) => {
       const index = state.cart.findIndex((cartProduct) => cartProduct.id === action.payload.id);
-
+      console.log(`ID to add quantity: ${action.payload.id}`);
+      console.log(`Index to add quantity: ${index}`);
       state.cart[index].quantity += 1;
-      state.cart[index].total += state.cart[index].product.price;
+      state.cart[index].total += state.cart[index].price;
     },
     deductOneProduct: (state, action) => {
       const index = state.cart.findIndex((cartProduct) => cartProduct.id === action.payload.id);
+      console.log(`ID to deduct quantity: ${action.payload.id}`);
+      console.log(`Index to deduct quantity: ${index}`);
 
       if (state.cart[index].quantity === 1) {
         // remove when 0 left
         state.cart.splice(index, 1);
       } else {
         state.cart[index].quantity -= 1;
-        state.cart[index].total -= state.cart[index].product.price;
+        state.cart[index].total -= state.cart[index].price;
       }
     },
     removeProduct: (state, action) => {
       const index = state.cart.findIndex((cartProduct) => cartProduct.id === action.payload.id);
+      console.log(`ID to remove: ${action.payload.id}`);
+      console.log(`Index to remove: ${index}`);
 
       state.cart.splice(index, 1);
     },
