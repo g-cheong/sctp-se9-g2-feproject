@@ -1,11 +1,12 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { USER_ACTION } from "../../redux/userReducer";
+import { CART_ACTION } from "../../redux/cartReducer";
+import Joi from "joi";
 
 import styles from "./LoginPage.module.css";
 
-import Joi from "joi";
-import UserContext from "../../context/UserContext";
-import { userAction } from "../../reducers/UserReducer";
 import mockApi from "../../api/mockApi";
 
 /*
@@ -37,8 +38,9 @@ const initialLoginState = {
 function LoginPage() {
   const [form, setForm] = useState(initialLoginState);
   const [formErrors, setFormErrors] = useState({});
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
 
-  const user = useContext(UserContext);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -116,10 +118,8 @@ function LoginPage() {
         `users/?username=${form.username.toLowerCase()}&password=${form.password.toLowerCase()}`
       );
       //set UserContext to loggedin
-      user.dispatch({
-        type: userAction.login,
-        payload: { username: res.data[0].username, cart: res.data[0].cart, id: res.data[0].id },
-      });
+      dispatch(USER_ACTION.logIn({ username: res.data[0].username, id: res.data[0].id }));
+      dispatch(CART_ACTION.getFromDB(res.data[0].cart));
       navigate("/", { replace: true });
     } catch (e) {
       alert("Invalid username or password.");

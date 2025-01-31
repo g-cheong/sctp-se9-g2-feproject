@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
+
 import SearchBar from "../../components/SearchBar/SearchBar";
 import HomePageView from "./HomePageView";
 import mockApi from "../../api/mockApi";

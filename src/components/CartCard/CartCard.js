@@ -5,28 +5,28 @@ export const CartCard = ({ product, handlerAddProduct, handlerSubtractProduct, h
   return (
     <div className={styles.cardContainer}>
       <div className={styles.cartCard}>
-        <img className={styles.cartImage} src={product.image} alt={product.description}></img>
+        <img className={styles.cartImage} src={product.product.image} alt={product.product.description}></img>
         <div className={styles.cartProductDetails}>
           <section className={styles.cardTitleSection}>
-            <h1>{product.title}</h1>
+            <h1>{product.product.title}</h1>
           </section>
           <div className={styles.detailsAndTrash}>
             <div className={styles.details}>
-              <span>Price: ${(product.price).toFixed(2)}</span>
+              <span>Price: ${product.product.price.toFixed(2)}</span>
               <span>
                 Quantity:
-                <button className={styles.button} onClick={() => handlerSubtractProduct(product.id)}>
+                <button className={styles.button} onClick={() => handlerSubtractProduct(product.product.id)}>
                   {"➖"}
                 </button>
                 {product.quantity}
-                <button className={styles.button} onClick={() => handlerAddProduct(product.id)}>
+                <button className={styles.button} onClick={() => handlerAddProduct(product.product.id)}>
                   {"➕"}
                 </button>
               </span>
-              <span>Total Price: ${(product.total).toFixed(2)}</span>
+              <span>Total Price: ${product.total.toFixed(2)}</span>
             </div>
             <div className={styles.trashContainer}>
-              <button className={styles.trashButton} onClick={() => handlerRemoveFromCart(product.id)}>
+              <button className={styles.trashButton} onClick={() => handlerRemoveFromCart(product.product.id)}>
                 <img src={trashIcon} alt="Remove from cart" />
               </button>
             </div>

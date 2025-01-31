@@ -1,10 +1,10 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import Joi from "joi";
 
 import styles from "./RegisterPage.module.css";
 
-import Joi from "joi";
-import UserContext from "../../context/UserContext";
 import mockApi from "../../api/mockApi";
 
 /*
@@ -36,7 +36,7 @@ function RegisterPage() {
   const [form, setForm] = useState(initialRegisterState);
   const [formErrors, setFormErrors] = useState({});
 
-  const user = useContext(UserContext);
+  const user = useSelector((state) => state.user);
   const navigate = useNavigate();
 
   //navigate user to home if user is logged in

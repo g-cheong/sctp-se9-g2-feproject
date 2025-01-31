@@ -1,25 +1,34 @@
 import { Link, NavLink } from "react-router-dom";
 import bluebag from "../../assets/bluebag.png";
 import styles from "./NavBar.module.css";
-import { useContext } from "react";
-import UserContext from "../../context/UserContext";
+import { useDispatch, useSelector } from "react-redux";
+import USER_ACTION from "../../redux/userReducer";
+import CART_ACTION from "../../redux/cartReducer";
 
 function Navbar() {
-  const user = useContext(UserContext);
+  const user = useSelector((state) => state.user);
+  const { cart } = useSelector((state) => state.cart);
+
+  const dispatch = useDispatch();
 
   return (
     <header>
       <Link to="/" className={styles.link}>
         <img className={styles.bagImg} src={bluebag} alt="Mart logo" />
         <span className={styles.logoText}>Mart</span>
-        {/* <span className={styles.logoText}>Shop</span> */}
       </Link>
 
       <nav className="styles.navContainer">
         <ul>
           {user.isLoggedIn ? (
             <li>
-              <Link className={styles.link} onClick={user.handlerLogout}>
+              <Link
+                className={styles.link}
+                onClick={() => {
+                  dispatch(USER_ACTION.logOut());
+                  dispatch(CART_ACTION.cartReset());
+                }}
+              >
                 Logout
               </Link>
             </li>
@@ -34,7 +43,7 @@ function Navbar() {
             <NavLink className={({ isActive }) => (isActive ? styles.linkActive : styles.link)} to="/cart">
               Cart
             </NavLink>
-            <span>{user.cart.length ? <span className={styles.badge}>{user.cart.length}</span> : ""}</span>
+            <span>{cart.length ? <span className={styles.badge}>{cart.length}</span> : ""}</span>
           </li>
         </ul>
       </nav>

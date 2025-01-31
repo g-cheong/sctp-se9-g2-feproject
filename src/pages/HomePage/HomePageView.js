@@ -1,5 +1,7 @@
-import styles from "./HomePage.module.css";
 import { PuffLoader } from "react-spinners";
+
+import styles from "./HomePage.module.css";
+
 import CategoryList from "../../components/CategoryList/CategoryList";
 import ProductList from "../../components/ProductList/ProductList";
 

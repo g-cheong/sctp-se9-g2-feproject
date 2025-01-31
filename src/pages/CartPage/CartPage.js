@@ -1,13 +1,15 @@
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import CART_ACTION from "../../redux/cartReducer";
+
+import styles from "./CartPage.module.css";
+
 import { CartCard } from "../../components/CartCard/CartCard";
 import { CartNotLoggedInPage } from "./CartNotLoggedInPage";
 import { CartEmptyPage } from "./CartEmptyPage";
-import { useContext, useEffect, useState } from "react";
-
-import UserContext from "../../context/UserContext";
-import { userAction } from "../../reducers/UserReducer";
-import styles from "./CartPage.module.css";
-import mockApi from "../../api/mockApi";
 import { CartBar } from "../../components/CartBar/CartBar";
+
+import mockApi from "../../api/mockApi";
 
 const DBupdateCart = async (userId, cart) => {
   try {
@@ -22,7 +24,10 @@ const DBupdateCart = async (userId, cart) => {
 
 function CartPage() {
   // declarations
-  const userCtx = useContext(UserContext);
+  const user = useSelector((state) => state.user);
+  const { cart } = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+
   const [cartWasCleared, setCartWasCleared] = useState(false);
 
   // useEffects
@@ -32,61 +37,50 @@ function CartPage() {
   }, []);
 
   useEffect(() => {
-    DBupdateCart(userCtx.id, userCtx.cart);
-  }, [userCtx.id, userCtx.cart]);
+    DBupdateCart(user.id, cart);
+  }, [user.id, cart]);
 
   useEffect(() => {
-    if (cartWasCleared && userCtx.cart.length === 0) {
+    if (cartWasCleared && cart.length === 0) {
       setCartWasCleared(false);
       alert("Cart has been checked out!");
     }
-  }, [cartWasCleared, userCtx.cart.length]);
+  }, [cartWasCleared, cart.length]);
 
   // handler functions
   const handlerAddProduct = (productId) => {
-    return userCtx.dispatch({
-      type: userAction.addProduct,
-      payload: { id: productId },
-    });
+    dispatch(CART_ACTION.addOneProduct(productId));
   };
   const handlerSubtractProduct = (productId) => {
-    return userCtx.dispatch({
-      type: userAction.subtractProduct,
-      payload: { id: productId },
-    });
+    dispatch(CART_ACTION.deductOneProduct(productId));
   };
   const handlerRemoveFromCart = (productId) => {
-    return userCtx.dispatch({
-      type: userAction.removeFromCart,
-      payload: { id: productId },
-    });
+    dispatch(CART_ACTION.removeProduct(productId));
   };
 
   const handlerCartCheckout = () => {
     // currently just removes items from cart as there's no checkout flow
     setCartWasCleared(true);
-    return userCtx.dispatch({
-      type: userAction.checkoutCart,
-    });
+    dispatch(CART_ACTION.cartReset());
   };
 
   // early return checks
-  if (!userCtx.isLoggedIn) {
+  if (!user.isLoggedIn) {
     return <CartNotLoggedInPage />;
   }
 
-  if (!userCtx.cart || userCtx.cart.length === 0) {
+  if (!cart || cart.length === 0) {
     return <CartEmptyPage />;
   }
 
   // return statement
   return (
     <div className={styles.cartList}>
-      <CartBar cart={userCtx.cart} handlerCheckout={handlerCartCheckout} />
-      {userCtx.cart.map((product) => {
+      <CartBar cart={cart} handlerCheckout={handlerCartCheckout} />
+      {cart.map((product) => {
         return (
           <CartCard
-            key={product.id}
+            key={product.product.id}
             product={product}
             handlerAddProduct={handlerAddProduct}
             handlerSubtractProduct={handlerSubtractProduct}

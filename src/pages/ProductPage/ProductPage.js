@@ -1,16 +1,18 @@
-import { useEffect, useState, useMemo } from "react";
-import React, { useCallback, useContext } from "react";
+import React, { useEffect, useState, useMemo, useCallback, useReducer } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useReducer } from "react";
-import mockApi from "../../api/mockApi";
-import ProductPageView from "./ProductPageView";
 import { defaultProduct, productReducer } from "../../reducers/ProductReducer";
-import { userAction } from "../../reducers/UserReducer";
-import UserContext from "../../context/UserContext";
+import { useDispatch, useSelector } from "react-redux";
+import { CART_ACTION } from "../../redux/cartReducer";
+
+import ProductPageView from "./ProductPageView";
+
+import mockApi from "../../api/mockApi";
 
 function ProductPage() {
   const [state, dispatch] = useReducer(productReducer, defaultProduct);
-  const userCtx = useContext(UserContext);
+  const userCtx = useSelector((state) => state.user);
+  const { cart } = useSelector((state) => state.cart);
+  const dispatchRedux = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
   const [products, setProducts] = useState([]);
@@ -59,10 +61,14 @@ function ProductPage() {
 
   const handlerAddToCart = () => {
     if (userCtx.isLoggedIn && userCtx.id !== null) {
-      userCtx.dispatch({
-        type: userAction.addProductToCart,
-        payload: { product: products, count: state.count, priceTotal: (state.count * products.price).toFixed(2) },
-      });
+      dispatchRedux(
+        CART_ACTION.addToCart({
+          product: products,
+          quantity: state.count,
+          total: parseFloat((state.count * products.price).toFixed(2)),
+        })
+      );
+
       setAddedItemsToCart(state.count);
       setIsCartUpdated(true);
     } else {
@@ -78,13 +84,13 @@ function ProductPage() {
     if (userCtx.isLoggedIn && userCtx.id !== null) {
       try {
         await mockApi.put(`/users/${userCtx.id}`, {
-          cart: userCtx.cart,
+          cart: cart,
         });
       } catch (error) {
         console.error("Failed to update user cart:", error);
       }
     }
-  }, [userCtx.isLoggedIn, userCtx.id, userCtx.cart]);
+  }, [userCtx.isLoggedIn, userCtx.id, cart]);
 
   useEffect(() => {
     if (isCartUpdated) {
