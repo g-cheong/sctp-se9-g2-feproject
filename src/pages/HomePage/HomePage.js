@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo } from "react";
 
 import SearchBar from "../../components/SearchBar/SearchBar";
 import HomePageView from "./HomePageView";
-import mockApi from "../../api/mockApi";
+import { backendApi } from "../../api/backendApi";
 
 //getSelectedProducts returns 5 products from the products array.
 //Assumption: products array has atleast 5 products.
@@ -22,7 +22,7 @@ function HomePage() {
   const getProducts = async () => {
     try {
       //get 20 products and set to products(state)
-      const res = await mockApi.get("/products");
+      const res = await backendApi.get("/products");
       setProducts(res.data);
     } catch (error) {
       console.log(error);

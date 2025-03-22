@@ -5,7 +5,7 @@ import Joi from "joi";
 
 import styles from "./RegisterPage.module.css";
 
-import mockApi from "../../api/mockApi";
+import { backendApi } from "../../api/backendApi";
 
 /*
 Page Workflow/Feature:
@@ -105,12 +105,26 @@ function RegisterPage() {
     register(form);
   };
 
+  // const register = async (form) => {
+  //   try {
+  //     const res = await mockApi.post(`users`, {
+  //       username: form.username.toLowerCase(),
+  //       password: form.password.toLowerCase(),
+  //       cart: [],
+  //     });
+
+  //     console.log(res);
+  //     alert("Register was successful!");
+  //     navigate("/login", { replace: true });
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
   const register = async (form) => {
     try {
-      const res = await mockApi.post(`users`, {
+      const res = await backendApi.post("/auth/register", {
         username: form.username.toLowerCase(),
-        password: form.password.toLowerCase(),
-        cart: [],
+        password: form.password,
       });
 
       console.log(res);

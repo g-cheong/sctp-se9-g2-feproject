@@ -7,6 +7,7 @@ import { CART_ACTION } from "../../redux/cartReducer";
 import ProductPageView from "./ProductPageView";
 
 import mockApi from "../../api/mockApi";
+import { backendApi } from "../../api/backendApi";
 
 function ProductPage() {
   const [state, dispatch] = useReducer(productReducer, defaultProduct);
@@ -25,7 +26,7 @@ function ProductPage() {
     try {
       //get the deails of product and set to product.(state)
       setIsLoaded(false);
-      const res = await mockApi.get("/products/" + id);
+      const res = await backendApi.get("/products/" + id);
       const singleProduct = res.data;
       if (singleProduct !== null && singleProduct !== undefined) {
         setProducts(singleProduct);
