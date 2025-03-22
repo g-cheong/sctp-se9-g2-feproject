@@ -26,6 +26,7 @@ function Navbar() {
                 onClick={() => {
                   dispatch(USER_ACTION.logOut());
                   dispatch(CART_ACTION.cartReset());
+                  localStorage.removeItem("minimartJwtToken");
                 }}
               >
                 Logout
