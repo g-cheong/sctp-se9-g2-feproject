@@ -2,8 +2,8 @@ import { Link, NavLink } from "react-router-dom";
 import bluebag from "../../assets/bluebag.png";
 import styles from "./NavBar.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import USER_ACTION from "../../redux/userReducer";
-import CART_ACTION from "../../redux/cartReducer";
+import { USER_ACTION } from "../../redux/userReducer";
+import { CART_ACTION } from "../../redux/cartReducer";
 
 function Navbar() {
   const user = useSelector((state) => state.user);
@@ -25,8 +25,8 @@ function Navbar() {
               <Link
                 className={styles.link}
                 onClick={() => {
-                  dispatch(USER_ACTION.logOut());
                   dispatch(CART_ACTION.cartReset());
+                  dispatch(USER_ACTION.logOut());
                 }}
               >
                 Logout

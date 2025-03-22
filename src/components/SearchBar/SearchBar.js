@@ -5,6 +5,7 @@ import Fuse from "fuse.js";
 import RecommendList from "../RecommendList/RecommendList";
 import ProductList from "../ProductList/ProductList";
 import mockApi from "../../api/mockApi";
+import { backendApi } from "../../api/backendApi";
 
 const initialSearchState = {
   searchInput: "",
@@ -27,8 +28,6 @@ function SearchBar() {
   const fuse = new Fuse(dummyProductData, options);
   const result = fuse.search(search.searchInput);
   const topFiveResult = result.slice(0, 5);
-  console.log(result);
-  console.log(topFiveResult);
 
   const handlerSearch = (e) => {
     e.preventDefault();
@@ -42,8 +41,7 @@ function SearchBar() {
       // search the mockAPI for the following params. If found set result to searchProducts else set searchError message
       try {
         const param = new URLSearchParams({ title: search.searchInput });
-        const res = await mockApi.get(`/products/?${param.toString()}`);
-        console.log("Searched Products Results" + res);
+        const res = await backendApi.get(`/products/search?${param.toString()}`);
         setSearch((prevState) => ({ ...prevState, searchProducts: res.data, prevSearch: prevState.searchInput }));
       } catch (e) {
         setSearch((prevState) => ({

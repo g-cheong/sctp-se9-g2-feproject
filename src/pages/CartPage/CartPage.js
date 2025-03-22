@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import CART_ACTION from "../../redux/cartReducer";
+import { CART_ACTION } from "../../redux/cartReducer";
 
 import styles from "./CartPage.module.css";
 
@@ -80,7 +80,7 @@ function CartPage() {
       {cart.map((product) => {
         return (
           <CartCard
-            key={product.product.id}
+            key={product.id}
             product={product}
             handlerAddProduct={handlerAddProduct}
             handlerSubtractProduct={handlerSubtractProduct}

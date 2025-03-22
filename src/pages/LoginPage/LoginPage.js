@@ -8,6 +8,7 @@ import Joi from "joi";
 import styles from "./LoginPage.module.css";
 
 import mockApi from "../../api/mockApi";
+import { backendApi } from "../../api/backendApi";
 
 /*
 Page Workflow/Feature:
@@ -112,16 +113,51 @@ function LoginPage() {
     login(form);
   };
 
+  // const login = async (form) => {
+  //   try {
+  //     const res = await mockApi.get(
+  //       `users/?username=${form.username.toLowerCase()}&password=${form.password.toLowerCase()}`
+  //     );
+  //     //set UserContext to loggedin
+  //     dispatch(USER_ACTION.logIn({ username: res.data[0].username, id: res.data[0].id }));
+  //     dispatch(CART_ACTION.getFromDB(res.data[0].cart));
+  //     navigate("/", { replace: true });
+  //   } catch (e) {
+  //     alert("Invalid username or password.");
+  //   }
+  // };
+
+  // const cartSample = {
+  //   id: "1",
+  //   title: "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
+  //   price: 109.95,
+  //   description:
+  //     "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+  //   image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+  //   quantity: 1,
+  //   total: 109.95,
+  // };
   const login = async (form) => {
     try {
-      const res = await mockApi.get(
-        `users/?username=${form.username.toLowerCase()}&password=${form.password.toLowerCase()}`
-      );
+      const res = await backendApi.post("/auth/login", {
+        username: form.username.toLowerCase(),
+        password: form.password,
+      });
+      console.log(res.data);
       //set UserContext to loggedin
-      dispatch(USER_ACTION.logIn({ username: res.data[0].username, id: res.data[0].id }));
-      dispatch(CART_ACTION.getFromDB(res.data[0].cart));
+      dispatch(USER_ACTION.logIn({ username: res.data.username, id: res.data.id }));
+      console.log(`Login Token: ${res.data.token}`);
+      localStorage.setItem("minimartJwtToken", res.data.token);
+      console.log(`LocalStoreage token: ${localStorage.getItem("minimartJwtToken")}`);
+
+      const res2 = await backendApi.get("users/cart/sample", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("minimartJwtToken")}` },
+      });
+      console.log(res2);
+      dispatch(CART_ACTION.getFromDB(res2.data));
       navigate("/", { replace: true });
     } catch (e) {
+      console.log(e);
       alert("Invalid username or password.");
     }
   };

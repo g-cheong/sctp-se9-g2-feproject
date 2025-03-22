@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "./CategoryList.module.css";
 import mockApi from "../../api/mockApi";
 import ProductList from "../ProductList/ProductList";
+import { backendApi } from "../../api/backendApi";
 
 function Categorylist() {
   const [selectedCategory, setSelectedCategory] = useState("women's clothing");
@@ -10,7 +11,7 @@ function Categorylist() {
     const getProductByCategory = async () => {
       try {
         const param = new URLSearchParams({ category: selectedCategory });
-        const res = await mockApi.get(`/products/?${param.toString()}`);
+        const res = await backendApi.get(`/products/search?${param.toString()}`);
         console.log(res);
         setProducts(res.data.filter((product) => product.category === selectedCategory));
       } catch (e) {

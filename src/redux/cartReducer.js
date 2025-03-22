@@ -45,7 +45,7 @@ export const cartSlice = createSlice({
 
       state.cart.splice(index, 1);
     },
-    cartReset: (state, action) => {
+    cartReset: (state) => {
       state.cart = [];
     },
   },
