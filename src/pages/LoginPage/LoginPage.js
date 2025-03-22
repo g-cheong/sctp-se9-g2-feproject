@@ -142,17 +142,16 @@ function LoginPage() {
         username: form.username.toLowerCase(),
         password: form.password,
       });
-      console.log(res.data);
       //set UserContext to loggedin
       dispatch(USER_ACTION.logIn({ username: res.data.username, id: res.data.id }));
       console.log(`Login Token: ${res.data.token}`);
       localStorage.setItem("minimartJwtToken", res.data.token);
-      console.log(`LocalStoreage token: ${localStorage.getItem("minimartJwtToken")}`);
+      console.log(`LocalStorage token: ${localStorage.getItem("minimartJwtToken")}`);
 
-      const res2 = await backendApi.get("users/cart/sample", {
+      //get cartproducts from DB
+      const res2 = await backendApi.get("users/cart", {
         headers: { Authorization: `Bearer ${localStorage.getItem("minimartJwtToken")}` },
       });
-      console.log(res2);
       dispatch(CART_ACTION.getFromDB(res2.data));
       navigate("/", { replace: true });
     } catch (e) {

@@ -6,7 +6,6 @@ import { CART_ACTION } from "../../redux/cartReducer";
 
 import ProductPageView from "./ProductPageView";
 
-import mockApi from "../../api/mockApi";
 import { backendApi } from "../../api/backendApi";
 
 function ProductPage() {
@@ -69,6 +68,7 @@ function ProductPage() {
           total: parseFloat((state.count * products.price).toFixed(2)),
         })
       );
+      updateUserCart();
 
       setAddedItemsToCart(state.count);
       setIsCartUpdated(true);
@@ -84,18 +84,46 @@ function ProductPage() {
   const updateUserCart = useCallback(async () => {
     if (userCtx.isLoggedIn && userCtx.id !== null) {
       try {
-        await mockApi.put(`/users/${userCtx.id}`, {
-          cart: cart,
-        });
+        // create cartproduct if not in cart
+        // update cart product if not in cart
+        const filteredCart = cart.filter((product) => product.id === products.id);
+
+        if (filteredCart.length === 0) {
+          const res = backendApi.post(
+            `/users/cart`,
+            {
+              ...products,
+              quantity: state.count,
+              total: parseFloat((state.count * products.price).toFixed(2)),
+            },
+            {
+              headers: { Authorization: `Bearer ${localStorage.getItem("minimartJwtToken")}` },
+            }
+          );
+          console.log("Created cartproduct!" + res);
+        } else {
+          const res = backendApi.put(
+            `users/cart/${products.id}`,
+            {
+              ...products,
+              quantity: state.count + filteredCart[0].quantity,
+              total: parseFloat(((state.count + filteredCart[0].quantity) * products.price).toFixed(2)),
+            },
+            {
+              headers: { Authorization: `Bearer ${localStorage.getItem("minimartJwtToken")}` },
+            }
+          );
+          console.log("Updated cartproduct!" + res);
+        }
       } catch (error) {
         console.error("Failed to update user cart:", error);
       }
     }
-  }, [userCtx.isLoggedIn, userCtx.id, cart]);
+  }, [userCtx.isLoggedIn, userCtx.id, cart, products, state.count]);
 
   useEffect(() => {
     if (isCartUpdated) {
-      updateUserCart();
+      // updateUserCart();
       setIsCartUpdated(false);
     }
   }, [isCartUpdated, updateUserCart]);

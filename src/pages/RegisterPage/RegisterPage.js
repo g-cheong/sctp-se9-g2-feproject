@@ -105,21 +105,6 @@ function RegisterPage() {
     register(form);
   };
 
-  // const register = async (form) => {
-  //   try {
-  //     const res = await mockApi.post(`users`, {
-  //       username: form.username.toLowerCase(),
-  //       password: form.password.toLowerCase(),
-  //       cart: [],
-  //     });
-
-  //     console.log(res);
-  //     alert("Register was successful!");
-  //     navigate("/login", { replace: true });
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
   const register = async (form) => {
     try {
       const res = await backendApi.post("/auth/register", {

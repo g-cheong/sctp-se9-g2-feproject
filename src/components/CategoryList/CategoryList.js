@@ -11,7 +11,6 @@ function Categorylist() {
       try {
         const param = new URLSearchParams({ category: selectedCategory });
         const res = await backendApi.get(`/products/search?${param.toString()}`);
-        console.log(res);
         setProducts(res.data.filter((product) => product.category === selectedCategory));
       } catch (e) {
         console.log(e);

@@ -9,18 +9,7 @@ import { CartNotLoggedInPage } from "./CartNotLoggedInPage";
 import { CartEmptyPage } from "./CartEmptyPage";
 import { CartBar } from "../../components/CartBar/CartBar";
 
-import mockApi from "../../api/mockApi";
-
-const DBupdateCart = async (userId, cart) => {
-  try {
-    const res = await mockApi.put(`/users/${userId}`, {
-      cart: cart,
-    });
-    console.log("PUT response:", res);
-  } catch (error) {
-    console.log(error);
-  }
-};
+import { backendApi } from "../../api/backendApi";
 
 function CartPage() {
   // declarations
@@ -37,10 +26,6 @@ function CartPage() {
   }, []);
 
   useEffect(() => {
-    DBupdateCart(user.id, cart);
-  }, [user.id, cart]);
-
-  useEffect(() => {
     if (cartWasCleared && cart.length === 0) {
       setCartWasCleared(false);
       alert("Cart has been checked out!");
@@ -48,14 +33,54 @@ function CartPage() {
   }, [cartWasCleared, cart.length]);
 
   // handler functions
-  const handlerAddProduct = (productId) => {
-    dispatch(CART_ACTION.addOneProduct({ id: productId }));
+  const handlerAddProduct = (product) => {
+    try {
+      backendApi.put(
+        `users/cart/${product.id}`,
+        {
+          ...product,
+          quantity: product.quantity + 1,
+          total: product.total + product.price,
+        },
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("minimartJwtToken")}` },
+        }
+      );
+      console.log("Adding product Successful!");
+      dispatch(CART_ACTION.addOneProduct({ id: product.id }));
+    } catch (e) {
+      console.log(`Adding cartproduct Failed!\n${e}`);
+    }
   };
-  const handlerSubtractProduct = (productId) => {
-    dispatch(CART_ACTION.deductOneProduct({ id: productId }));
+  const handlerSubtractProduct = (product) => {
+    try {
+      backendApi.put(
+        `users/cart/${product.id}`,
+        {
+          ...product,
+          quantity: product.quantity - 1,
+          total: product.total - product.price,
+        },
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("minimartJwtToken")}` },
+        }
+      );
+      console.log("Subtract product Successful!");
+      dispatch(CART_ACTION.deductOneProduct({ id: product.id }));
+    } catch (e) {
+      console.log(`Subtract cartproduct Failed!\n${e}`);
+    }
   };
-  const handlerRemoveFromCart = (productId) => {
-    dispatch(CART_ACTION.removeProduct({ id: productId }));
+  const handlerRemoveFromCart = (product) => {
+    try {
+      backendApi.delete(`users/cart/${product.id}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("minimartJwtToken")}` },
+      });
+      console.log("Delete product Successful!");
+      dispatch(CART_ACTION.removeProduct({ id: product.id }));
+    } catch (e) {
+      console.log(`Delete cartproduct Failed!\n${e}`);
+    }
   };
 
   const handlerCartCheckout = () => {

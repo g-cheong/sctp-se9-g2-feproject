@@ -27,8 +27,6 @@ function SearchBar() {
   const fuse = new Fuse(dummyProductData, options);
   const result = fuse.search(search.searchInput);
   const topFiveResult = result.slice(0, 5);
-  console.log(result);
-  console.log(topFiveResult);
 
   const handlerSearch = (e) => {
     e.preventDefault();
@@ -39,11 +37,10 @@ function SearchBar() {
         searchError: "",
       }));
 
-      // search the mockAPI for the following params. If found set result to searchProducts else set searchError message
+      // search the backendAPI for the following params. If found set result to searchProducts else set searchError message
       try {
         const param = new URLSearchParams({ title: search.searchInput });
         const res = await backendApi.get(`/products/search?${param.toString()}`);
-        console.log("Searched Products Results" + res);
         setSearch((prevState) => ({ ...prevState, searchProducts: res.data, prevSearch: prevState.searchInput }));
       } catch (e) {
         setSearch((prevState) => ({
@@ -99,7 +96,7 @@ function SearchBar() {
         </button>
       </form>
 
-      {/* If mockApi returns error show No result found */}
+      {/* If backendApi returns error show No result found */}
       {search.searchError && (
         <>
           <h2 className={styles.titleName}>Search Results for "{search.prevSearch}"</h2>
@@ -108,7 +105,7 @@ function SearchBar() {
           </div>
         </>
       )}
-      {/* If mockApi returns data, display searchProducts */}
+      {/* If backendApi returns data, display searchProducts */}
       {search.searchProducts.length > 0 && (
         <>
           <h2 className={styles.titleName}>Search Results for "{search.prevSearch}"</h2>
