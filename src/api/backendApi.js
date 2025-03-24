@@ -8,7 +8,15 @@ export const backendApi = axios.create({
 
 export const jwtBackendApi = axios.create({
   baseURL: BACKEND_BASE_URL,
-  headers: {
-    Authorization: `Bearer ${localStorage.getItem("minimartJwtToken")}`,
-  },
+});
+
+//adding jwtToken from localStorage on every request
+jwtBackendApi.interceptors.request.use((config) => {
+  const jwtToken = localStorage.getItem("minimartJwtToken");
+
+  if (jwtToken) {
+    config.headers["Authorization"] = `Bearer ${jwtToken}`;
+  }
+
+  return config;
 });

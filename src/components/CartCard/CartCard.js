@@ -15,7 +15,11 @@ export const CartCard = ({ product, handlerAddProduct, handlerSubtractProduct, h
               <span>Price: ${product.price.toFixed(2)}</span>
               <span>
                 Quantity:
-                <button className={styles.button} onClick={() => handlerSubtractProduct(product)}>
+                <button
+                  className={styles.button}
+                  disabled={product.quantity === 1}
+                  onClick={() => handlerSubtractProduct(product)}
+                >
                   {"➖"}
                 </button>
                 {product.quantity}

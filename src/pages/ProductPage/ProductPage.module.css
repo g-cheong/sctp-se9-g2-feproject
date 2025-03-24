@@ -318,3 +318,24 @@
 .magnifierPicture {
   display: flex !important;
 }
+.ratingContainer {
+  display: flex;
+  justify-content: space-between;
+}
+.ratingStarContainer {
+  display: flex;
+  align-items: center;
+}
+.addRatingButton {
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  background-color: #f1f3f6;
+  color: #475587;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.5;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-bottom: 0.3rem;
+}

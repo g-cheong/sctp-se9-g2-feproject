@@ -3,11 +3,15 @@ import Button from "../../components/ProductCard/Button";
 //Use the Magnifier component from the react18-image-magnifier package for image
 import Magnifier from "react18-image-magnifier";
 import styles from "./ProductPage.module.css";
+import ReactStars from "react-stars";
 
 function ProductPageView({
   products,
   handlerMinus,
   count,
+  handlerAddRating,
+  userRating,
+  setUserRating,
   handlerPlus,
   priceTotal,
   handlerAddToCart,
@@ -97,6 +101,32 @@ function ProductPageView({
                 <div className={styles.productTotalNumberContainer}>
                   <span>Total Price: {priceTotal}</span>
                 </div>
+                {/* TODO: Implement posting user rating */}
+                {/* Product Rating */}
+                <div className={styles.ratingContainer}>
+                  <div className={styles.ratingStarContainer}>
+                    <p>Product Rating: </p>
+                    <ReactStars value={products.rating.rate} edit={false} />({products.rating.count})
+                  </div>
+
+                  <button
+                    className={styles.addRatingButton}
+                    onClick={() => {
+                      setUserRating((prevState) => ({ ...prevState, isVisible: !prevState.isVisible }));
+                    }}
+                  >
+                    Add Rating
+                  </button>
+                </div>
+                {/* User Rating */}
+                {userRating.isVisible && (
+                  <div className={styles.ratingContainer}>
+                    <div className={styles.ratingStarContainer}>
+                      <p>User Rating: </p>
+                      <ReactStars value={userRating.rate} edit={userRating.rate === 0} onChange={handlerAddRating} />
+                    </div>
+                  </div>
+                )}
               </div>
               <div className={styles.productActionContainer}>
                 <button className={styles.productActionButton} onClick={handlerAddToCart}>

@@ -6,7 +6,7 @@ import { CART_ACTION } from "../../redux/cartReducer";
 
 import ProductPageView from "./ProductPageView";
 
-import { backendApi } from "../../api/backendApi";
+import { backendApi, jwtBackendApi } from "../../api/backendApi";
 
 function ProductPage() {
   const [state, dispatch] = useReducer(productReducer, defaultProduct);
@@ -18,6 +18,7 @@ function ProductPage() {
   const [products, setProducts] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [addedItemsToCart, setAddedItemsToCart] = useState(0);
+  const [userRating, setUserRating] = useState({ isVisible: false, rate: 0, isAllowEdit: true });
   //To check the states change on Page
   const [isCartUpdated, setIsCartUpdated] = useState(false);
 
@@ -35,13 +36,28 @@ function ProductPage() {
       console.log(error);
     }
   }, [id]);
+  const getUserRating = useCallback(async () => {
+    try {
+      //get the deails of product and set to product.(state)
+      const res = await jwtBackendApi.get(`/users/ratings/products/${id}`);
+      const userRating = res.data;
+      console.log("User Rating Response:");
+      console.log(res.data);
+      if (userRating !== null && userRating !== undefined) {
+        setUserRating((prevState) => ({ ...prevState, rate: userRating.rate }));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [id]);
 
   useEffect(() => {
     //set title to login
     document.title = "Mart | Product";
     //getProduct fetches the product only when user goes to product(once).
     getProduct();
-  }, [getProduct]);
+    getUserRating();
+  }, [getProduct, getUserRating]);
 
   const handlerPlus = () => {
     dispatch({ type: "PLUS_COUNT" });
@@ -80,6 +96,26 @@ function ProductPage() {
   const handlerContinueShopping = () => {
     navigate("/");
   };
+  const handlerAddRating = (newRate) => {
+    try {
+      // TODO: refetch product rating after we rate
+      const res = jwtBackendApi.post(`/users/ratings/products/${products.id}`, { rate: newRate });
+      setUserRating((prevState) => ({ ...prevState, isVisible: false, rate: newRate }));
+      console.log("Created rating Successful");
+      console.log(res);
+      //Logic for updating rating display
+      setProducts((prevState) => ({
+        ...prevState,
+        rating: {
+          count: prevState.rating.count + 1,
+          rate: (prevState.rating.count * prevState.rating.rate + newRate) / (prevState.rating.count + 1),
+        },
+      }));
+    } catch (e) {
+      console.log("Created rating Failed");
+      console.log(e);
+    }
+  };
   //Update user cart back to Api
   const updateUserCart = useCallback(async () => {
     if (userCtx.isLoggedIn && userCtx.id !== null) {
@@ -89,30 +125,18 @@ function ProductPage() {
         const filteredCart = cart.filter((product) => product.id === products.id);
 
         if (filteredCart.length === 0) {
-          const res = backendApi.post(
-            `/users/cart`,
-            {
-              ...products,
-              quantity: state.count,
-              total: parseFloat((state.count * products.price).toFixed(2)),
-            },
-            {
-              headers: { Authorization: `Bearer ${localStorage.getItem("minimartJwtToken")}` },
-            }
-          );
+          const res = jwtBackendApi.post(`/users/cart`, {
+            ...products,
+            quantity: state.count,
+            total: parseFloat((state.count * products.price).toFixed(2)),
+          });
           console.log("Created cartproduct!" + res);
         } else {
-          const res = backendApi.put(
-            `users/cart/${products.id}`,
-            {
-              ...products,
-              quantity: state.count + filteredCart[0].quantity,
-              total: parseFloat(((state.count + filteredCart[0].quantity) * products.price).toFixed(2)),
-            },
-            {
-              headers: { Authorization: `Bearer ${localStorage.getItem("minimartJwtToken")}` },
-            }
-          );
+          const res = jwtBackendApi.put(`users/cart/${products.id}`, {
+            ...products,
+            quantity: state.count + filteredCart[0].quantity,
+            total: parseFloat(((state.count + filteredCart[0].quantity) * products.price).toFixed(2)),
+          });
           console.log("Updated cartproduct!" + res);
         }
       } catch (error) {
@@ -138,6 +162,9 @@ function ProductPage() {
         products={products}
         handlerMinus={handlerMinus}
         count={state.count}
+        handlerAddRating={handlerAddRating}
+        userRating={userRating}
+        setUserRating={setUserRating}
         handlerPlus={handlerPlus}
         priceTotal={calculatePriceTotal.toFixed(2)}
         handlerAddToCart={handlerAddToCart}
