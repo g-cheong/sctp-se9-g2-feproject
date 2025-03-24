@@ -85,8 +85,16 @@ function CartPage() {
 
   const handlerCartCheckout = () => {
     // currently just removes items from cart as there's no checkout flow
-    setCartWasCleared(true);
-    dispatch(CART_ACTION.cartReset());
+    try {
+      backendApi.delete(`users/cart`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("minimartJwtToken")}` },
+      });
+      console.log("Delete cart was Successful!");
+      setCartWasCleared(true);
+      dispatch(CART_ACTION.cartReset());
+    } catch (e) {
+      console.log(`Delete cart Failed!\n${e}`);
+    }
   };
 
   // early return checks
