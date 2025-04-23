@@ -1,0 +1,22 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@5.0.1
+
+jobs:
+  build:
+  test:
+  scan:
+  publish:
+  deploy:
+
+# Develop Workflow: build-test-scan
+# Release Workflow: build-test-scan-publish-deploy
+workflows:
+  simple_workflow:
+    jobs:
+      - build
+      - test
+      - scan
+      - publish
+      - deploy
