@@ -9,16 +9,17 @@ jobs:
       - image: cimg/node:16.10
     steps:
       - checkout
-      - node/install-packages:
-          pkg-manager: npm
-      - run: |
-          echo "Installing dependencies..."
-          npm install
+      - run:
+          name: Install dependencies
+          command: npm ci
+      - run:
+          name: Build frontend
+          command: npm run build
 
-  test:
-  scan:
-  publish:
-  deploy:
+  # test:
+  # scan:
+  # publish:
+  # deploy:
 
 # Develop Workflow: build-test-scan
 # Release Workflow: build-test-scan-publish-deploy
@@ -26,7 +27,7 @@ workflows:
   simple_workflow:
     jobs:
       - build
-      - test
-      - scan
-      - publish
-      - deploy
+      # - test
+      # - scan
+      # - publish
+      # - deploy
