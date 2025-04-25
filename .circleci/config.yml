@@ -55,7 +55,6 @@ workflows:
           branches:
             only:
               - /^develop.*/
-              # - /^release\/.*/
       - test:
           requires:
             - build
@@ -63,7 +62,6 @@ workflows:
             branches:
               only:
                 - /^develop.*/
-                # - /^release\/.*/
       - scan:
           requires:
             - test
@@ -71,7 +69,6 @@ workflows:
             branches:
               only:
                 - /^develop.*/
-                # - /^release\/.*/ 
       # - publish
       # - deploy
   release_workflow:
@@ -80,7 +77,6 @@ workflows:
         filters:
           branches:
             only:
-              # - /^develop.*/
               - /^release\/.*/
       - test:
           requires:
@@ -88,7 +84,6 @@ workflows:
           filters:
             branches:
               only:
-                # - /^develop.*/
                 - /^release\/.*/
       - scan:
           requires:
@@ -96,7 +91,6 @@ workflows:
           filters:
             branches:
               only:
-                # - /^develop.*/
                 - /^release\/.*/ 
       # - publish
       # - deploy
