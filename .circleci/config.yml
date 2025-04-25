@@ -26,9 +26,9 @@ jobs:
           docker-username: DOCKERHUB_LOGIN # DOCKER_LOGIN is the default value, if it exists, it automatically would be used.
           docker-password: DOCKERHUB_PASSWORD # DOCKER_PASSWORD is the default value
       - docker/build:
-          image: $DOCKER_USERNAME/theminimart
+          image: $DOCKERHUB_LOGIN/theminimart
       - docker/push:
-          image: $DOCKER_USERNAME/theminimart
+          image: $DOCKERHUB_LOGIN/theminimart
   deploy:
     docker:
       - image: cimg/node:16.10
