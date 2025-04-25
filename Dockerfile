@@ -1,12 +1,12 @@
-FROM node:16-alpine
+FROM node:18-alpine
 
 WORKDIR /app
 
-ENV PORT=3000
+ENV PORT=80
 
 COPY ["package.json", "package-lock.json*", "./"]
 
-RUN npm install
+RUN npm ci
 
 COPY . .
 

@@ -4,7 +4,7 @@ orbs:
   node: circleci/node@5.0.1
   docker: circleci/docker@2.1.4
   snyk: snyk/snyk@1.5.0
-
+  #render: render/run@1.0.0
 jobs:
   build:
     docker:
@@ -39,14 +39,30 @@ jobs:
       - snyk/scan: 
           docker-image-name: the-mini-mart-fe
           severity-threshold: critical
-  # publish:
-    # - docker/check:
-    #         docker-username: DOCKERHUB_LOGIN  # already setup on project's github to push to gab's docker
-    #         docker-password: DOCKERHUB_PASSWORD  # already setup on project's github to push to gab's docker
-  # deploy:
+
+  publish:
+    executor: docker/docker
+    steps:
+      - setup_remote_docker
+      - checkout
+      - docker/check:
+          docker-username: DOCKERHUB_LOGIN # DOCKER_LOGIN is the default value, if it exists, it automatically would be used.
+          docker-password: DOCKERHUB_PASSWORD # DOCKER_PASSWORD is the default value
+      - docker/build:
+          image: $DOCKER_USERNAME/theminimart
+      - docker/push:
+          image: $DOCKER_USERNAME/theminimart
+  
+  deploy:
+    docker:
+      - image: cimg/node:16.10
+    steps:
+      - run:
+          name: Deploy to Render
+          command: |
+            curl -X POST $RENDER_DEPLOY_HOOK_URL
 
 # Develop Workflow: build-test-scan
-# Release Workflow: build-test-scan-publish-deploy
 workflows:
   develop_workflow:
     jobs:
@@ -69,8 +85,8 @@ workflows:
             branches:
               only:
                 - /^develop.*/
-      # - publish
-      # - deploy
+
+# Release Workflow: build-test-scan-publish-deploy
   release_workflow:
     jobs:
       - build:
@@ -92,5 +108,15 @@ workflows:
             branches:
               only:
                 - /^release\/.*/ 
-      # - publish
-      # - deploy
+      - publish:
+          requires:
+            - scan
+          filters:
+            branches:
+              only: /^release\/.*/ 
+      - deploy:
+          requires:
+            - publish
+          filters:
+            branches:
+              only: /^release\/.*/ 
