@@ -56,7 +56,7 @@ workflows:
               - /^release\/.*/
       - test:
         requires:
-          - build
+        - build
         filters:
           branches:
             only:
