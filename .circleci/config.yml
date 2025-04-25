@@ -32,15 +32,13 @@ jobs:
   scan:
     docker:
       - image: cimg/node:16.10
-    environment:
-      IMAGE_NAME: gabrielcheong/the-mini-mart
     steps:
       - checkout
       - setup_remote_docker      
-      - docker/check
-      - run: docker build -t $IMAGE_NAME .
+      - run: docker build -t the-mini-mart-fe .
       - snyk/scan: 
-        docker-image-name: $IMAGE_NAME
+        target: docker-image
+        docker-image-name: the-mini-mart-fe
   # publish:
     # - docker/check:
     #         docker-username: DOCKERHUB_LOGIN  # already setup on project's github to push to gab's docker
@@ -68,7 +66,7 @@ workflows:
                 - /^release\/.*/
       - scan:
           requires:
-            - build
+            - test
           filters:
             branches:
               only:
