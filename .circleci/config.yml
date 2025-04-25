@@ -28,6 +28,19 @@ jobs:
           echo "Running tests..."
           npm run test
   
+  scan:
+    docker:
+      - image: cimg/node:16.10
+    environment:
+      IMAGE_NAME: gabrielcheong/the-mini-mart
+    steps:
+      - checkout
+      - setup_remote_docker      
+      - docker/check
+      - run: docker build -t $IMAGE_NAME .
+      - snyk/scan: 
+          docker-image-name: $IMAGE_NAME
+
 workflows:
   simple_workflow:
     jobs:
@@ -35,7 +48,7 @@ workflows:
           filters:
             branches:
               only:
-                - develop
+                - /^develop.*/
                 - /^release\/.*/
       - test:
           requires:
@@ -43,5 +56,13 @@ workflows:
           filters:
             branches:
               only:
-                - develop
+                - /^develop.*/
+                - /^release\/.*/
+      - scan:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - /^develop.*/
                 - /^release\/.*/
