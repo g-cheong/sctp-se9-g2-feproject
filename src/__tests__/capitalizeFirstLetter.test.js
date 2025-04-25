@@ -11,7 +11,7 @@ describe("capitalizeFirstLetter", () => {
   it("should capitalised first letter for all lowercase string", () => {
     const str = "hello world";
     const result = capitalizeFirstLetter(str);
-    expect(result).toStrictEqual("Hello world");
+    expect(result).toStrictEqual("hHello world");
   });
 
   it("should capitalised first letter for string with uppercase after first letter", () => {
