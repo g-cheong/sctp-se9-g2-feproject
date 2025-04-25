@@ -28,18 +28,18 @@ jobs:
           echo "Running tests..."
           npm run test
   
-  # scan:
-  #   docker:
-  #     - image: cimg/node:16.10
-  #   environment:
-  #       IMAGE_NAME: edisonzsq/education-space
-  #   steps:
-  #     - checkout
-  #     - setup_remote_docker      
-  #     - docker/check
-  #     - run: docker build -t $IMAGE_NAME .
-  #     - snyk/scan: 
-  #         docker-image-name: $IMAGE_NAME
+  scan:
+    docker:
+      - image: cimg/node:16.10
+    environment:
+        IMAGE_NAME: gabrielcheong/the-mini-mart
+    steps:
+      - checkout
+      - setup_remote_docker      
+      - docker/check
+      - run: docker build -t $IMAGE_NAME .
+      - snyk/scan: 
+          docker-image-name: $IMAGE_NAME
   # publish:
   # deploy:
 
@@ -62,6 +62,13 @@ workflows:
               only:
                 - /^develop.*/
                 - /^release\/.*/
-      # - scan
+      - scan:
+        requires:
+          - build
+        filters:
+          branches:
+            only:
+              - /^develop.*/
+              - /^release\/.*/ 
       # - publish
       # - deploy
