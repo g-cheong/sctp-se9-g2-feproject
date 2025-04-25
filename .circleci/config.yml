@@ -4,7 +4,6 @@ orbs:
   node: circleci/node@5.0.1
   docker: circleci/docker@2.1.4
   snyk: snyk/snyk@1.5.0
-  #render: render/run@1.0.0
 jobs:
   build:
     docker:
@@ -28,15 +27,15 @@ jobs:
       - run: |
           echo "Running tests..."
           npm run test
-  
+
   scan:
     docker:
       - image: cimg/node:16.10
     steps:
       - checkout
-      - setup_remote_docker      
+      - setup_remote_docker
       - run: docker build -t the-mini-mart-fe .
-      - snyk/scan: 
+      - snyk/scan:
           docker-image-name: the-mini-mart-fe
           severity-threshold: critical
 
@@ -49,10 +48,10 @@ jobs:
           docker-username: DOCKERHUB_LOGIN # DOCKER_LOGIN is the default value, if it exists, it automatically would be used.
           docker-password: DOCKERHUB_PASSWORD # DOCKER_PASSWORD is the default value
       - docker/build:
-          image: $DOCKER_USERNAME/theminimart
+          image: $DOCKERHUB_LOGIN/theminimart
       - docker/push:
-          image: $DOCKER_USERNAME/theminimart
-  
+          image: $DOCKERHUB_LOGIN/theminimart
+
   deploy:
     docker:
       - image: cimg/node:16.10
@@ -86,7 +85,7 @@ workflows:
               only:
                 - /^develop.*/
 
-# Release Workflow: build-test-scan-publish-deploy
+  # Release Workflow: build-test-scan-publish-deploy
   release_workflow:
     jobs:
       - build:
@@ -107,16 +106,16 @@ workflows:
           filters:
             branches:
               only:
-                - /^release\/.*/ 
+                - /^release\/.*/
       - publish:
           requires:
             - scan
           filters:
             branches:
-              only: /^release\/.*/ 
+              only: /^release\/.*/
       - deploy:
           requires:
             - publish
           filters:
             branches:
-              only: /^release\/.*/ 
+              only: /^release\/.*/
