@@ -2,6 +2,8 @@ version: 2.1
 
 orbs:
   node: circleci/node@5.0.1
+  docker: circleci/docker@2.1.4
+  snyk: snyk/snyk@1.5.0
 
 jobs:
   build:
@@ -16,18 +18,85 @@ jobs:
           name: Build frontend
           command: npm run build
 
-  # test:
-  # scan:
+  test:
+    docker:
+      - image: cimg/node:16.10
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: npm
+      - run: |
+          echo "Running tests..."
+          npm run test
+  
+  scan:
+    docker:
+      - image: cimg/node:16.10
+    steps:
+      - checkout
+      - setup_remote_docker      
+      - run: docker build -t the-mini-mart-fe .
+      - snyk/scan: 
+          docker-image-name: the-mini-mart-fe
+          severity-threshold: critical
   # publish:
+    # - docker/check:
+    #         docker-username: DOCKERHUB_LOGIN  # already setup on project's github to push to gab's docker
+    #         docker-password: DOCKERHUB_PASSWORD  # already setup on project's github to push to gab's docker
   # deploy:
 
 # Develop Workflow: build-test-scan
 # Release Workflow: build-test-scan-publish-deploy
 workflows:
-  simple_workflow:
+  develop_workflow:
     jobs:
-      - build
-      # - test
-      # - scan
+      - build:
+        filters:
+          branches:
+            only:
+              - /^develop.*/
+              # - /^release\/.*/
+      - test:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - /^develop.*/
+                # - /^release\/.*/
+      - scan:
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - /^develop.*/
+                # - /^release\/.*/ 
+      # - publish
+      # - deploy
+  release_workflow:
+    jobs:
+      - build:
+        filters:
+          branches:
+            only:
+              # - /^develop.*/
+              - /^release\/.*/
+      - test:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                # - /^develop.*/
+                - /^release\/.*/
+      - scan:
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                # - /^develop.*/
+                - /^release\/.*/ 
       # - publish
       # - deploy
