@@ -52,7 +52,7 @@ workflows:
         filters:
           branches:
             only:
-              - develop
+              - /^develop.*/
               - /^release\/.*/
       - test:
           requires:
@@ -60,7 +60,7 @@ workflows:
           filters:
             branches:
               only:
-                - develop
+                - /^develop.*/
                 - /^release\/.*/
       # - scan
       # - publish
