@@ -55,13 +55,13 @@ workflows:
               - develop
               - /^release\/.*/
       - test:
-        requires:
-        - build
-        filters:
-          branches:
-            only:
-              - develop
-              - /^release\/.*/
+          requires:
+          - build
+          filters:
+            branches:
+              only:
+                - develop
+                - /^release\/.*/
       # - scan
       # - publish
       # - deploy
