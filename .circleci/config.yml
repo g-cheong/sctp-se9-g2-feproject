@@ -1,0 +1,60 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@5.0.1
+  docker: circleci/docker@2.1.4
+  #render: render/run@1.0.0
+jobs:
+  build:
+    docker:
+      - image: cimg/node:16.10
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: npm ci
+      - run:
+          name: Build frontend
+          command: npm run build
+  # test:
+  # scan:
+  publish:
+    executor: docker/docker
+    steps:
+      - setup_remote_docker
+      - checkout
+      - docker/check:
+          docker-username: DOCKERHUB_LOGIN # DOCKER_LOGIN is the default value, if it exists, it automatically would be used.
+          docker-password: DOCKERHUB_PASSWORD # DOCKER_PASSWORD is the default value
+      - docker/build:
+          image: $DOCKER_USERNAME/theminimart
+      - docker/push:
+          image: $DOCKER_USERNAME/theminimart
+  deploy:
+    docker:
+      - image: cimg/node:16.10
+    steps:
+      - run:
+          name: Deploy to Render
+          command: |
+            curl -X POST $RENDER_DEPLOY_HOOK_URL
+# Develop Workflow: build-test-scan
+# Release Workflow: build-test-scan-publish-deploy
+workflows:
+  simple_workflow:
+    jobs:
+      - build
+      # - test
+      # - scan
+      - publish:
+          requires:
+            - build
+          filters:
+            branches:
+              only: release/v1.0.0
+      - deploy:
+          requires:
+            - publish
+          filters:
+            branches:
+              only: release/v1.0.0
