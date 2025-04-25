@@ -41,6 +41,9 @@ jobs:
       - snyk/scan: 
         docker-image-name: $IMAGE_NAME
   # publish:
+    # - docker/check:
+    #         docker-username: DOCKERHUB_LOGIN  # already setup on project's github to push to gab's docker
+    #         docker-password: DOCKERHUB_PASSWORD  # already setup on project's github to push to gab's docker
   # deploy:
 
 # Develop Workflow: build-test-scan
