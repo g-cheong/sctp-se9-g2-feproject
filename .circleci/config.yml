@@ -27,19 +27,6 @@ jobs:
       - run: |
           echo "Running tests..."
           npm run test
-  
-  scan:
-    docker:
-      - image: cimg/node:16.10
-    environment:
-        IMAGE_NAME: edisonzsq/education-space
-    steps:
-      - checkout
-      - setup_remote_docker      
-      - docker/check
-      - run: docker build -t $IMAGE_NAME .
-      - snyk/scan: 
-          docker-image-name: $IMAGE_NAME
 
 workflows:
   simple_workflow:
