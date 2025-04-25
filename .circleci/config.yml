@@ -32,14 +32,14 @@ jobs:
     docker:
       - image: cimg/node:16.10
     environment:
-        IMAGE_NAME: gabrielcheong/the-mini-mart
+      IMAGE_NAME: gabrielcheong/the-mini-mart
     steps:
       - checkout
       - setup_remote_docker      
       - docker/check
       - run: docker build -t $IMAGE_NAME .
       - snyk/scan: 
-          docker-image-name: $IMAGE_NAME
+        docker-image-name: $IMAGE_NAME
   # publish:
   # deploy:
 
