@@ -38,6 +38,7 @@ jobs:
       - run: docker build -t the-mini-mart-fe .
       - snyk/scan: 
           docker-image-name: the-mini-mart-fe
+          fail-on: low
   # publish:
     # - docker/check:
     #         docker-username: DOCKERHUB_LOGIN  # already setup on project's github to push to gab's docker
