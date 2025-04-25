@@ -51,10 +51,10 @@ workflows:
   develop_workflow:
     jobs:
       - build:
-        filters:
-          branches:
-            only:
-              - /^develop.*/
+          filters:
+            branches:
+              only:
+                - /^develop.*/
       - test:
           requires:
             - build
@@ -74,10 +74,10 @@ workflows:
   release_workflow:
     jobs:
       - build:
-        filters:
-          branches:
-            only:
-              - /^release\/.*/
+          filters:
+            branches:
+              only:
+                - /^release\/.*/
       - test:
           requires:
             - build
