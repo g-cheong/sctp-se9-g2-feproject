@@ -66,12 +66,12 @@ workflows:
                 - /^develop.*/
                 - /^release\/.*/
       - scan:
-        requires:
-          - build
-        filters:
-          branches:
-            only:
-              - /^develop.*/
-              - /^release\/.*/ 
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - /^develop.*/
+                - /^release\/.*/ 
       # - publish
       # - deploy
