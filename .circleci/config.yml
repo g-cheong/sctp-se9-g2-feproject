@@ -37,7 +37,6 @@ jobs:
       - setup_remote_docker      
       - run: docker build -t the-mini-mart-fe .
       - snyk/scan: 
-          target: docker-image
           docker-image-name: the-mini-mart-fe
   # publish:
     # - docker/check:
