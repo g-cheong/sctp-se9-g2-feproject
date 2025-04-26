@@ -58,7 +58,7 @@ jobs:
     steps:
       - run:
           name: Deploy to Render
-          command: |
+          command: | # using curl command instead of orb
             curl -X POST $RENDER_DEPLOY_HOOK_URL
 
 # Develop Workflow: build-test-scan
