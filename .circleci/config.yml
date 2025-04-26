@@ -92,30 +92,30 @@ workflows:
           filters:
             branches:
               only:
-                - /^release\/.*/
+                - release
       - test:
           requires:
             - build
           filters:
             branches:
               only:
-                - /^release\/.*/
+                - release
       - scan:
           requires:
             - test
           filters:
             branches:
               only:
-                - /^release\/.*/
+                - release
       - publish:
           requires:
             - scan
           filters:
             branches:
-              only: /^release\/.*/
+              only: release
       - deploy:
           requires:
             - publish
           filters:
             branches:
-              only: /^release\/.*/
+              only: release
