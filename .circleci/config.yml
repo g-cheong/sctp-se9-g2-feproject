@@ -4,7 +4,7 @@ orbs:
   node: circleci/node@5.0.1
   docker: circleci/docker@2.1.4
   snyk: snyk/snyk@1.5.0
-  ggshield: gitguardian/shield@1.1.4
+  ggshield: gitguardian/ggshield@1.1.4
 jobs:
   build:
     docker:
