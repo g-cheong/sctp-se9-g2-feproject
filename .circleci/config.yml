@@ -4,6 +4,7 @@ orbs:
   node: circleci/node@5.0.1
   docker: circleci/docker@2.1.4
   snyk: snyk/snyk@1.5.0
+  ggshield: gitguardian/shield@1.1.4
 jobs:
   build:
     docker:
@@ -38,6 +39,26 @@ jobs:
       - snyk/scan:
           docker-image-name: the-mini-mart-fe
           severity-threshold: critical
+
+  secret-scan:
+    parameters:
+    docker:
+      - image: cimg/node:16.10
+    environment:
+      GGSHIELD_API_KEY: $GAB_GITGUARDIAN_API_KEY
+    steps:
+      - checkout
+      - run: 
+          name: Install GitGuardian CLI
+          command:
+            curl -sSL https://downloads.gitguardian.com/ggshield/install.sh | bash -s -- install
+      - run:
+          name: Initialise GitGuardian Shield
+          command: ggshield config set api_key $GAB_GITGUARDIAN_API_KEY
+      - run:
+          name: Run GitGuardian Scan
+          command: ggshield scan repo --all --fail-on-severity high
+
 
   publish:
     executor: docker/docker
@@ -80,6 +101,13 @@ workflows:
       - scan:
           requires:
             - test
+          filters:
+            branches:
+              only:
+                - /^develop.*/
+      - secret-scan:
+          requires:
+            - build
           filters:
             branches:
               only:
