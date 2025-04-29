@@ -105,7 +105,7 @@ workflows:
             branches:
               only:
                 - /^develop.*/
-      - secret-scan:
+      - ggshield/scan:
           base_revision: <<pipeline.git.base_revision>>
           revision: <<pipeline.git.revision>>
           requires:
