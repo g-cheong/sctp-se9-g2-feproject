@@ -106,8 +106,7 @@ workflows:
               only:
                 - /^develop.*/
       - ggshield/scan:
-          environment:
-            GITGUARDIAN_API_KEY: $GAB_GITGUARDIAN_API_KEY
+          GITGUARDIAN_API_KEY: $GAB_GITGUARDIAN_API_KEY
           base_revision: <<pipeline.git.base_revision>>
           revision: <<pipeline.git.revision>>
           requires:
