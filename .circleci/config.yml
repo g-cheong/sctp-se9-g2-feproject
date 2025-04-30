@@ -4,6 +4,7 @@ orbs:
   node: circleci/node@5.0.1
   docker: circleci/docker@2.1.4
   snyk: snyk/snyk@1.5.0
+  ggshield: gitguardian/ggshield@1.1.4
 jobs:
   build:
     docker:
@@ -84,6 +85,16 @@ workflows:
             branches:
               only:
                 - /^develop.*/
+      - ggshield/scan:
+          name: secrets-scan
+          base_revision: <<pipeline.git.base_revision>>
+          revision: <<pipeline.git.revision>>
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - /^develop.*/
 
   # Release Workflow: build-test-scan-publish-deploy
   release_workflow:
@@ -107,6 +118,16 @@ workflows:
             branches:
               only:
                 - release
+      - ggshield/scan:
+          name: secrets-scan
+          base_revision: <<pipeline.git.base_revision>>
+          revision: <<pipeline.git.revision>>
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - release    
       - publish:
           requires:
             - scan
