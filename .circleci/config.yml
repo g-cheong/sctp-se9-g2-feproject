@@ -118,6 +118,16 @@ workflows:
             branches:
               only:
                 - release
+      - ggshield/scan:
+          name: secrets-scan
+          base_revision: <<pipeline.git.base_revision>>
+          revision: <<pipeline.git.revision>>
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - release    
       - publish:
           requires:
             - scan
