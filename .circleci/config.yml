@@ -40,16 +40,6 @@ jobs:
           docker-image-name: the-mini-mart-fe
           severity-threshold: critical
 
-  # secret-scan:
-  #   docker:
-  #     - image: gitguardian/gg-shield:latest
-  #   steps:
-  #     - checkout
-  #     - run:
-  #         name: Run GitGuardian Scan
-  #         command: ggshield scan --all --api-key "$GAB_GITGUARDIAN_API_KEY" --exit-code
-
-
   publish:
     executor: docker/docker
     steps:
