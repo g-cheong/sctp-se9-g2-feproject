@@ -96,6 +96,8 @@ workflows:
               only:
                 - /^develop.*/
       - ggshield/scan:
+          base_revision: <<pipeline.git.base_revision>>
+          revision: <<pipeline.git.revision>>
           requires:
             - build
           filters:
