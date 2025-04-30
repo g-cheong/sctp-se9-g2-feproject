@@ -87,7 +87,8 @@ workflows:
                 - /^develop.*/
       - ggshield/scan:
           name: secrets-scan
-          token: $GITGUARDIAN_API_KEY
+          enviornment:
+            GITGUARDIAN_API_KEY: $GITGUARDIAN_API_KEY
           base_revision: <<pipeline.git.base_revision>>
           revision: <<pipeline.git.revision>>
           requires:
