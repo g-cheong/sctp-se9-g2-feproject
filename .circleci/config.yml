@@ -96,6 +96,7 @@ workflows:
               only:
                 - /^develop.*/
       - ggshield/scan:
+          name: secrets-scan
           base_revision: <<pipeline.git.base_revision>>
           revision: <<pipeline.git.revision>>
           requires:
