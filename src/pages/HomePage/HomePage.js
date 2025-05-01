@@ -41,7 +41,7 @@ function HomePage() {
 
   return (
     <div>
-      {/* <p>This is the release version.</p> */}
+      <p>This is the release version.</p>
       <SearchBar />
       <HomePageView selectedProducts={selectedProducts} />
     </div>
