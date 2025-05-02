@@ -127,7 +127,7 @@ workflows:
           filters:
             branches:
               only:
-                - release    
+                - release
       - publish:
           requires:
             - scan
@@ -140,3 +140,4 @@ workflows:
           filters:
             branches:
               only: release
+# End of the workflow
