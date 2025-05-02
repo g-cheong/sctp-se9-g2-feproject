@@ -85,7 +85,7 @@ workflows:
             branches:
               only:
                 - /^develop.*/
-      - ggshield/scan:
+      - ggshield/scan: #secrets scan job
           name: secrets-scan
           base_revision: <<pipeline.git.base_revision>>
           revision: <<pipeline.git.revision>>
@@ -118,7 +118,7 @@ workflows:
             branches:
               only:
                 - release
-      - ggshield/scan:
+      - ggshield/scan: #secrets scan job
           name: secrets-scan
           base_revision: <<pipeline.git.base_revision>>
           revision: <<pipeline.git.revision>>
