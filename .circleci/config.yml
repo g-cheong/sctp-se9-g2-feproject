@@ -50,8 +50,13 @@ jobs:
           docker-password: DOCKERHUB_PASSWORD # DOCKER_PASSWORD is the default value
       - docker/build:
           image: $DOCKERHUB_LOGIN/theminimart
+          tag: v1.0.0,${CIRCLE_SHA1:0:7}
       - docker/push:
           image: $DOCKERHUB_LOGIN/theminimart
+          tag: v1.0.0
+      - docker/push:
+          image: $DOCKERHUB_LOGIN/theminimart
+          tag: ${CIRCLE_SHA1:0:7}
 
   deploy:
     docker:
