@@ -1,0 +1,142 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@5.0.1
+  docker: circleci/docker@2.1.4
+  snyk: snyk/snyk@1.5.0
+  ggshield: gitguardian/ggshield@1.1.4
+jobs:
+  build:
+    docker:
+      - image: cimg/node:16.10
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: npm ci
+      - run:
+          name: Build frontend
+          command: npm run build
+
+  test:
+    docker:
+      - image: cimg/node:16.10
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: npm
+      - run: |
+          echo "Running tests..."
+          npm run test
+
+  scan:
+    docker:
+      - image: cimg/node:16.10
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run: docker build -t the-mini-mart-fe .
+      - snyk/scan:
+          docker-image-name: the-mini-mart-fe
+          severity-threshold: critical
+
+  publish:
+    executor: docker/docker
+    steps:
+      - setup_remote_docker
+      - checkout
+      - docker/check:
+          docker-username: DOCKERHUB_LOGIN # DOCKER_LOGIN is the default value, if it exists, it automatically would be used.
+          docker-password: DOCKERHUB_PASSWORD # DOCKER_PASSWORD is the default value
+      - docker/build:
+          image: $DOCKERHUB_LOGIN/theminimart
+      - docker/push:
+          image: $DOCKERHUB_LOGIN/theminimart
+
+  deploy:
+    docker:
+      - image: cimg/node:16.10
+    steps:
+      - run:
+          name: Deploy to Render
+          command: | # using curl command instead of orb
+            curl -X POST $RENDER_DEPLOY_HOOK_URL
+
+# Develop Workflow: build-test-scan
+workflows:
+  develop_workflow:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only:
+                - /^develop.*/
+      - test:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - /^develop.*/
+      - scan:
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - /^develop.*/
+      - ggshield/scan:
+          name: secrets-scan
+          base_revision: <<pipeline.git.base_revision>>
+          revision: <<pipeline.git.revision>>
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - /^develop.*/
+
+  # Release Workflow: build-test-scan-publish-deploy
+  release_workflow:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only:
+                - release
+      - test:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - release
+      - scan:
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - release
+      - ggshield/scan:
+          name: secrets-scan
+          base_revision: <<pipeline.git.base_revision>>
+          revision: <<pipeline.git.revision>>
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - release    
+      - publish:
+          requires:
+            - scan
+          filters:
+            branches:
+              only: release
+      - deploy:
+          requires:
+            - publish
+          filters:
+            branches:
+              only: release
